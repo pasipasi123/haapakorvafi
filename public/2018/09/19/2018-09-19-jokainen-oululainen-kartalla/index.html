@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Jokainen oululainen kartalla &middot; Pasi Haapakorva</title>
+        <meta name="description" content="Kun näin Näytä datan piirtäneen jokaisen suomalaisen kartalle (inspiroituneena tästä ja tästä) käyttäen avoimia kotimaisia paikkatietoaineistoja ja ilmaista paikkatieto-ohjelmistoa QGIS:iä, halusin kokeilla onnistuisiko minulta ohjelmoida vastaava kuva R:llä.
+Viime vuosina R on kehittynyt voimakkaasti. Tidyversen ympärille on kertynyt kokonainen uusi koulukunta R-ohjelmoijia. Tidyversen paketit kuten dplyr ja purrr helpottavat ja nopeuttavat datan käsittelyä. Samaan aikaan myös paikkatietoaineistojen käsittelyyn on kehittynyt uusia työkaluja, kuten sf-paketti.
+Ensin haetaan dataa:
+library(tidyverse)library(sf)library(magrittr) # %$%-operaattori# library(gdalUtils)# # ogr2ogr(&quot;WFS:http://geo.">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.48" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="Jokainen oululainen kartalla">
+<meta property="og:description" content="Kun näin Näytä datan piirtäneen jokaisen suomalaisen kartalle (inspiroituneena tästä ja tästä) käyttäen avoimia kotimaisia paikkatietoaineistoja ja ilmaista paikkatieto-ohjelmistoa QGIS:iä, halusin kokeilla onnistuisiko minulta ohjelmoida vastaava kuva R:llä.
+Viime vuosina R on kehittynyt voimakkaasti. Tidyversen ympärille on kertynyt kokonainen uusi koulukunta R-ohjelmoijia. Tidyversen paketit kuten dplyr ja purrr helpottavat ja nopeuttavat datan käsittelyä. Samaan aikaan myös paikkatietoaineistojen käsittelyyn on kehittynyt uusia työkaluja, kuten sf-paketti.
+Ensin haetaan dataa:
+library(tidyverse)library(sf)library(magrittr) # %$%-operaattori# library(gdalUtils)# # ogr2ogr(&quot;WFS:http://geo.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/2018/09/19/2018-09-19-jokainen-oululainen-kartalla/">
+        <link rel="stylesheet" href="/dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+        
+        
+    </head>
+    <body>
+        
+<script type="application/javascript">
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'XXX', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <h1 class="site-title">
+                                <a title="Pasi Haapakorva" href="/">Pasi Haapakorva</a>
+                            </h1>
+                        
+                        <a class="button-square" href="/index.xml"><i class="fa fa-rss"></i></a>
+                        
+                            <a class="button-square button-social hint--top" data-hint="Twitter" title="Twitter" href="https://twitter.com/pasi_pasi">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Github" title="Github" href="https://github.com/pasipasi123/">
+                                <i class="fa fa-github-alt"></i>
+                            </a>
+                        
+                        
+                        
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Email" title="Email" href="mailto:pasi.haapakorva[a]gmail.com">
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="Blog" href="/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Pasi" href="/page/pasi/">Pasi</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Kivisydänprojekti" href="/page/kivisyd%C3%A4nprojekti/">Kivisydänprojekti</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Jokainen oululainen kartalla</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2018-09-19" itemprop="datePublished">Wed, Sep 19, 2018</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="https://google.com/&#43;XXX" itemprop="url" rel="author">Pasi Haapakorva</a>
+            </span>
+        </span>
+    </p>
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    <p>Kun näin <a href="http://naytadata.com/">Näytä data</a>n piirtäneen jokaisen suomalaisen <a href="https://www.reddit.com/r/dataisbeautiful/comments/9guknx/the_finnish_population_as_dots_on_a_map_oc/">kartalle</a> (inspiroituneena <a href="https://www.reddit.com/r/dataisbeautiful/comments/9fr3jt/where_the_dutch_live_a_dot_for_every_inhabitant/">tästä</a> ja <a href="http://www.maartenlambrechts.com/2018/02/13/one-person-one-dot-maps-and-how-to-make-them.html">tästä</a>) käyttäen avoimia kotimaisia <a href="http://www.stat.fi/org/avoindata/paikkatietoaineistot/kuntapohjaiset_tilastointialueet.html">paikkatietoaineistoja</a> ja ilmaista paikkatieto-ohjelmistoa <a href="https://www.qgis.org/en/site/">QGIS</a>:iä, halusin kokeilla onnistuisiko minulta ohjelmoida vastaava kuva <a href="https://www.r-project.org/">R</a>:llä.</p>
+<p>Viime vuosina R on kehittynyt voimakkaasti. <a href="https://www.tidyverse.org/">Tidyverse</a>n ympärille on kertynyt kokonainen uusi koulukunta R-ohjelmoijia. Tidyversen paketit kuten <code>dplyr</code> ja <code>purrr</code> helpottavat ja nopeuttavat datan käsittelyä. Samaan aikaan myös paikkatietoaineistojen käsittelyyn on kehittynyt uusia työkaluja, kuten <a href="https://github.com/r-spatial/sf"><code>sf</code></a>-paketti.</p>
+<p>Ensin haetaan dataa:</p>
+<pre class="r"><code>library(tidyverse)
+library(sf)
+library(magrittr) # %$%-operaattori
+# library(gdalUtils)
+# 
+# ogr2ogr(&quot;WFS:http://geo.stat.fi/geoserver/vaestoruutu/wfs&quot;, &quot;ruudut.shp&quot;, layer = &quot;vaestoruutu:vaki2017_1km&quot;)
+# 
+# ogr2ogr(&quot;WFS:http://geo.stat.fi/geoserver/tilastointialueet/wfs&quot;, &quot;kunnat.shp&quot;, &quot;kunta1000k_2017&quot;)
+
+ruudut &lt;- read_sf(&quot;ruudut.shp&quot;)
+kunnat &lt;- read_sf(&quot;kunnat.shp&quot;)
+</code></pre>
+<p>Käytän <code>gdalUtils</code>-paketin <code>ogr2ogr()</code>-funktiota hakeakseni tilastokeskuksen rajapinnalta kilometrin väestöruutuaineiston ja lisäksi kuntarajat sisältävän aineiston. <code>ogr2ogr()</code> vaatii toimiakseen <a href="https://www.gdal.org/">GDAL</a>:in, joka asentuu muun muassa QGIS:n mukana, mutta sen voinee asentaa myös erikseen.</p>
+<p><code>ogr2ogr()</code> lukee rajapinnalta aineistot tiedostoon, joten aineiston lataus tehdään vain kerran.</p>
+<p>Irroitetaan kuntaobjektista Oulu.</p>
+<pre class="r"><code>oulu &lt;- kunnat %&gt;% 
+  filter(nimi == &quot;Oulu&quot;)</code></pre>
+<p>Seuraavaksi liitän <code>oulu</code>-objektin lataamiini ruutuihin ja suodatan taulusta pois rivit, joille ei löydy kunnan nimeä. Sitten arvon Ouluun osuvien ruutujen sisälle yhtä monta satunnaista koordinaattiparia kuin ruudussa on asukkaita.</p>
+<pre class="r"><code>oulupisteet &lt;- ruudut %&gt;% 
+  st_join(oulu) %&gt;% 
+  filter(!is.na(nimi)) %$% # map2-funktiolla ei ole data-argumenttia, joten sille avataan tällä operaattorilla taulun sisältö
+  map2(geometry, vaesto, st_sample) %&gt;% 
+  map(st_coordinates) %&gt;% 
+  map(as_tibble) %&gt;% 
+  bind_rows()</code></pre>
+<p>Piirretään kuva.</p>
+<pre class="r"><code>oulupisteet %&gt;% 
+  ggplot() +
+  geom_sf(data = oulu, fill = &quot;gray20&quot;, color = &quot;transparent&quot;) +
+  geom_point(aes(X, Y), size = 0.01, alpha = 0.15, color = &quot;turquoise&quot;) +
+  coord_sf(expand = FALSE) +
+  theme(panel.grid.major = element_line(color = &quot;transparent&quot;),
+        panel.grid.minor = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.background = element_rect(fill = &quot;gray50&quot;),
+        plot.background = element_rect(fill = &quot;gray50&quot;),
+        plot.title = element_text(hjust = 0.5, color = &quot;gray90&quot;, size = 40), 
+        plot.subtitle = element_text(hjust = 0.5, color = &quot;gray90&quot;, size = 30, 
+                                     margin = margin(0, 0, 1, 0, &quot;cm&quot;))) +
+  labs(x = NULL, y = NULL, 
+       title = &quot;Missä oululaiset asuvat?&quot;, 
+       subtitle = &quot;Jokainen oululainen pisteenä&quot;)
+
+#ggsave(&quot;oulu.png&quot;, h = 10, w = 8.5)</code></pre>
+<p><img src="/img/oulu.png" /> Oulu on paisunut vuosien 2009 ja 2013 kuntaliitosten myötä valtavan suureksi. Tuntuisi, että kuvasta hahmottuvat tilastoruudut eivät ole kilometri kanttiinsa vaan pienempiä, mutta Oulun valtava noin sadan kilometrin pituus aiheuttaa näköharhan.</p>
+<p>Valtaosa Oulun pinta-alasta on asumatonta. Usein kuulee puhuttavan, että Oulussa on pakko päästä liikkumaan autolla, mutta väestöstä taitaa vain pieni osa asua sellaisissa paikoissa, mistä todella ei muulla välineellä pääse käymään keskustassa.</p>
+<p>Nyt kun menetelmä on otettu haltuun, voin piirtää saman kuvan koko Suomesta. Tehdään ensin Suomen kartta yhdistämällä maakunnat toisiinsa, koska mistään ei äkkiä löytynyt koko Suomea.</p>
+<pre class="r"><code># ogr2ogr(&quot;WFS:http://geo.stat.fi/geoserver/tilastointialueet/wfs&quot;, &quot;maakunnat.shp&quot;, &quot;maakunta1000k_2018&quot;)
+
+suomi &lt;- read_sf(&quot;maakunnat.shp&quot;) %&gt;% st_union()</code></pre>
+<p>Sitten arvotaan asuinruutuihin koordinaatit. Tässä kestää noin 10 minuuttia. Jos aikoo tehdä tätä usein, kannattaa tallentaa koordinaatit tiedostoon.</p>
+<pre class="r"><code>ruutupisteet &lt;- ruudut %&gt;%
+  map2(geometry, vaesto, st_sample) %$% 
+  map(st_coordinates) %&gt;%
+  map(as_tibble) %&gt;%
+  bind_rows()</code></pre>
+<p>Sitten piirretään kuva. Haluan tähän kuvaan kokeilla eri fonttia, joten alkuun luen Windowsin fontit sisään R:ään.</p>
+<pre class="r"><code>library(extrafont)
+font_import() # tämä ja seuraava tehdään vain kerran
+loadfonts()
+
+p1 &lt;- ggplot(suomi) +
+  geom_sf(fill = &quot;gray20&quot;, color = &quot;transparent&quot;) +
+  geom_point(data = ruutupisteet, aes(X, Y), size = 0.0025, alpha = 0.04, color = &quot;turquoise&quot;) +
+  coord_sf(expand = FALSE) +
+  theme(panel.grid.major = element_line(color = &quot;transparent&quot;),
+        panel.grid.minor = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.background = element_rect(fill = &quot;gray20&quot;),
+        plot.background = element_rect(fill = &quot;gray20&quot;),
+        plot.title = element_text(hjust = 0.5, color = &quot;gray90&quot;, size = 50, 
+                                  margin = margin(0, 0, 0.5, 0, &quot;cm&quot;)), 
+        plot.subtitle = element_text(hjust = 0.5, color = &quot;gray90&quot;, size = 30, 
+                                     margin = margin(0, 0, 1, 0, &quot;cm&quot;)),
+        text = element_text(family = &quot;Arial Black&quot;)) +
+  labs(x = NULL, y = NULL, title = &quot;Missä suomalaiset asuvat?&quot;, 
+       subtitle = &quot;Jokainen suomalainen pisteenä&quot;)
+
+ggsave(&quot;suomi.png&quot;, h = 20, w = 11)</code></pre>
+<div class="figure">
+<img src="/img/suomi.png" />
+
+</div>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="/tags/gis/">GIS</a>, 
+            
+                <a href="/tags/avoin-data/">avoin data</a>
+            
+        </p>
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=Jokainen%20oululainen%20kartalla&url=%2f2018%2f09%2f19%2f2018-09-19-jokainen-oululainen-kartalla%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2018%2f09%2f19%2f2018-09-19-jokainen-oululainen-kartalla%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+        
+    </div>
+</footer>
+
+        
+    <div class="comments">
+        
+    </div>
+
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="Pasi Haapakorva" href="/">Pasi Haapakorva</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2018 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="/js/jquery-1.11.3.min.js"></script>
+        <script src="/js/jquery.fitvids.js"></script>
+        
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        
+        
+        <script src="/js/scripts.js"></script>
+    </body>
+</html>
+

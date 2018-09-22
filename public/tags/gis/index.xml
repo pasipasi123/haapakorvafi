@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gis on Pasi Haapakorva</title>
+    <link>/tags/gis/</link>
+    <description>Recent content in Gis on Pasi Haapakorva</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Pasi Haapakorva</copyright>
+    <lastBuildDate>Wed, 19 Sep 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/gis/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Jokainen oululainen kartalla</title>
+      <link>/2018/09/19/2018-09-19-jokainen-oululainen-kartalla/</link>
+      <pubDate>Wed, 19 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/09/19/2018-09-19-jokainen-oululainen-kartalla/</guid>
+      <description>Kun näin Näytä datan piirtäneen jokaisen suomalaisen kartalle (inspiroituneena tästä ja tästä) käyttäen avoimia kotimaisia paikkatietoaineistoja ja ilmaista paikkatieto-ohjelmistoa QGIS:iä, halusin kokeilla onnistuisiko minulta ohjelmoida vastaava kuva R:llä.
+Viime vuosina R on kehittynyt voimakkaasti. Tidyversen ympärille on kertynyt kokonainen uusi koulukunta R-ohjelmoijia. Tidyversen paketit kuten dplyr ja purrr helpottavat ja nopeuttavat datan käsittelyä. Samaan aikaan myös paikkatietoaineistojen käsittelyyn on kehittynyt uusia työkaluja, kuten sf-paketti.
+Ensin haetaan dataa:
+library(tidyverse)library(sf)library(magrittr) # %$%-operaattori# library(gdalUtils)# # ogr2ogr(&amp;quot;WFS:http://geo.</description>
+    </item>
+    
+  </channel>
+</rss>

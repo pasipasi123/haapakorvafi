@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pages on Pasi Haapakorva</title>
+    <link>/page/</link>
+    <description>Recent content in Pages on Pasi Haapakorva</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Pasi Haapakorva</copyright>
+    <lastBuildDate>Fri, 21 Sep 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kivisydänprojekti</title>
+      <link>/page/kivisyd%C3%A4nprojekti/</link>
+      <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/page/kivisyd%C3%A4nprojekti/</guid>
+      <description>Oulun kaupungilla valmisteltiin uutta pysäköintipolitiikkaa vuonna 2017. Kuulin, että kaupungin viranhaltijat eivät saa tietoja Oulun Pysäköinti Oy:n omistamien pysäköintihallien ja -talojen käytöstä, koska kyseessä on osakeyhtiö, jolla on oikeus salaisuuksiinsa. En itse käytä autopysäköintipaikkoja missään, koska en autoile. Minua kuitenkin kiinnostaa keskustan autopysäköinti, koska talojen ja etenkin Kivisydämen rakentamisen myötä tarkoituksena on ollut korvata maanpäällistä pysäköintiä tehokkaammilla toiminnoilla kuten leveämmillä jalkakäytävillä ja nykyaikaisilla pyöräteillä. Tilaa ihmisille, ei autoille.
+Oulun kaupungin tarjoamat liikenteen rajapinnat olivat minulle jo pyöräliikenteen osalta tuttuja.</description>
+    </item>
+    
+    <item>
+      <title>Pasi</title>
+      <link>/page/pasi/</link>
+      <pubDate>Thu, 20 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/page/pasi/</guid>
+      <description>Olen Pasi Haapakorva, oululainen tutkijakoulutettava sosiaalipolitiikan oppiaineessa. Vuodesta 2015 lähtien olen ollut töissä THL:n syntymäkohorttitutkimusryhmässä. Olen myös aktiivinen liikenne- ja kaupunkipolitiikassa. Olen ollut Oulun polkupyöräilijät ry:n hallituksen jäsen yhdistyksen perustamisesta vuonna 2013 lähtien ja sen puheenjohtajana vuodesta 2015 alkaen. Vuosina 2015–2016 olin jäsen Pyöräliiton hallituksessa.
+Teen työkseni tutkimusta. Tutkimukseni on täysin kvantitatiivista: kirjoitan enemmän ohjelmakoodia kuin tekstiä. Tilasto-ohjelmoin R-kielellä käyttäen R- ja Rstudio-ohjelmistoja, jotka ovat avoimia ja ilmaisia, joten voin harrastaa ohjelmointia myös kotikoneellani.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>/page/about/</link>
+      <pubDate>Fri, 03 Apr 2015 02:13:50 +0000</pubDate>
+      
+      <guid>/page/about/</guid>
+      <description>About Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec dolor in magna lobortis egestas. Suspendisse eu erat tempor, tristique neque eu, convallis nulla. Curabitur vel bibendum lacus, at semper mauris. Suspendisse aliquet commodo ex, sed sagittis metus aliquam id. Maecenas feugiat rutrum lorem vel imperdiet. Nullam ornare lectus ut enim finibus, et porttitor mi tincidunt. Aenean lacinia, leo quis vehicula eleifend, quam libero sagittis erat, at euismod augue mauris et sapien.</description>
+    </item>
+    
+    <item>
+      <title>Contact</title>
+      <link>/page/contact/</link>
+      <pubDate>Fri, 03 Apr 2015 02:13:50 +0000</pubDate>
+      
+      <guid>/page/contact/</guid>
+      <description>Contact Aenean ipsum justo, semper eu nisl ut, pretium tincidunt sem. Praesent et diam sit amet lacus lobortis dictum a id lacus. Quisque hendrerit sit amet turpis eu varius. Ut id lorem ac felis ultrices tincidunt. Pellentesque consequat arcu ac fringilla imperdiet. Phasellus pellentesque, sapien non pulvinar blandit, sapien ante aliquet felis, vel porttitor sapien ante in lacus. Fusce non urna aliquet, malesuada nibh vel, luctus urna. Phasellus ut lacus molestie, varius purus quis, malesuada lorem.</description>
+    </item>
+    
+  </channel>
+</rss>

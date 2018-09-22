@@ -1,0 +1,122 @@
+---
+title: Jokainen oululainen kartalla
+author: Pasi Haapakorva
+date: '2018-09-19'
+slug: jokainen-oululainen-kartalla
+categories:
+  - R
+tags:
+  - GIS
+  - avoin data
+description: ''
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, eval = FALSE, warning = FALSE)
+```
+Kun näin [Näytä data](http://naytadata.com/)n piirtäneen jokaisen suomalaisen [kartalle](https://www.reddit.com/r/dataisbeautiful/comments/9guknx/the_finnish_population_as_dots_on_a_map_oc/) (inspiroituneena [tästä](https://www.reddit.com/r/dataisbeautiful/comments/9fr3jt/where_the_dutch_live_a_dot_for_every_inhabitant/) ja [tästä](http://www.maartenlambrechts.com/2018/02/13/one-person-one-dot-maps-and-how-to-make-them.html)) käyttäen avoimia kotimaisia [paikkatietoaineistoja](http://www.stat.fi/org/avoindata/paikkatietoaineistot/kuntapohjaiset_tilastointialueet.html) ja ilmaista paikkatieto-ohjelmistoa [QGIS](https://www.qgis.org/en/site/):iä, halusin kokeilla onnistuisiko minulta ohjelmoida vastaava kuva [R](https://www.r-project.org/):llä.
+
+Viime vuosina R on kehittynyt voimakkaasti. [Tidyverse](https://www.tidyverse.org/)n ympärille on kertynyt kokonainen uusi koulukunta R-ohjelmoijia. Tidyversen paketit kuten `dplyr` ja `purrr` helpottavat ja nopeuttavat datan käsittelyä. Samaan aikaan myös paikkatietoaineistojen käsittelyyn on kehittynyt uusia työkaluja, kuten [`sf`](https://github.com/r-spatial/sf)-paketti.
+
+Ensin haetaan dataa:
+```{r}
+library(tidyverse)
+library(sf)
+library(magrittr) # %$%-operaattori
+# library(gdalUtils)
+# 
+# ogr2ogr("WFS:http://geo.stat.fi/geoserver/vaestoruutu/wfs", "ruudut.shp", layer = "vaestoruutu:vaki2017_1km")
+# 
+# ogr2ogr("WFS:http://geo.stat.fi/geoserver/tilastointialueet/wfs", "kunnat.shp", "kunta1000k_2017")
+
+ruudut <- read_sf("ruudut.shp")
+kunnat <- read_sf("kunnat.shp")
+
+```
+Käytän `gdalUtils`-paketin `ogr2ogr()`-funktiota hakeakseni tilastokeskuksen rajapinnalta kilometrin väestöruutuaineiston ja lisäksi kuntarajat sisältävän aineiston. `ogr2ogr()` vaatii toimiakseen [GDAL](https://www.gdal.org/):in, joka asentuu muun muassa QGIS:n mukana, mutta sen voinee asentaa myös erikseen.
+
+`ogr2ogr()` lukee rajapinnalta aineistot tiedostoon, joten aineiston lataus tehdään vain kerran.
+
+Irroitetaan kuntaobjektista Oulu.
+```{r} 
+oulu <- kunnat %>% 
+  filter(nimi == "Oulu")
+```
+Seuraavaksi liitän `oulu`-objektin lataamiini ruutuihin ja suodatan taulusta pois rivit, joille ei löydy kunnan nimeä. Sitten arvon Ouluun osuvien ruutujen sisälle yhtä monta satunnaista koordinaattiparia kuin ruudussa on asukkaita. 
+```{r}
+oulupisteet <- ruudut %>% 
+  st_join(oulu) %>% 
+  filter(!is.na(nimi)) %$% # map2-funktiolla ei ole data-argumenttia, joten sille avataan tällä operaattorilla taulun sisältö
+  map2(geometry, vaesto, st_sample) %>% 
+  map(st_coordinates) %>% 
+  map(as_tibble) %>% 
+  bind_rows()
+```
+Piirretään kuva. 
+```{r}
+oulupisteet %>% 
+  ggplot() +
+  geom_sf(data = oulu, fill = "gray20", color = "transparent") +
+  geom_point(aes(X, Y), size = 0.01, alpha = 0.15, color = "turquoise") +
+  coord_sf(expand = FALSE) +
+  theme(panel.grid.major = element_line(color = "transparent"),
+        panel.grid.minor = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.background = element_rect(fill = "gray50"),
+        plot.background = element_rect(fill = "gray50"),
+        plot.title = element_text(hjust = 0.5, color = "gray90", size = 40), 
+        plot.subtitle = element_text(hjust = 0.5, color = "gray90", size = 30, 
+                                     margin = margin(0, 0, 1, 0, "cm"))) +
+  labs(x = NULL, y = NULL, 
+       title = "Missä oululaiset asuvat?", 
+       subtitle = "Jokainen oululainen pisteenä")
+
+#ggsave("oulu.png", h = 10, w = 8.5)
+```
+![](/img/oulu.png)
+Oulu on paisunut vuosien 2009 ja 2013 kuntaliitosten myötä valtavan suureksi. Tuntuisi, että kuvasta hahmottuvat tilastoruudut eivät ole kilometri kanttiinsa vaan pienempiä, mutta Oulun valtava noin sadan kilometrin pituus aiheuttaa näköharhan.
+
+Valtaosa Oulun pinta-alasta on asumatonta. Usein kuulee puhuttavan, että Oulussa on pakko päästä liikkumaan autolla, mutta väestöstä taitaa vain pieni osa asua sellaisissa paikoissa, mistä todella ei muulla välineellä pääse käymään keskustassa.
+
+Nyt kun menetelmä on otettu haltuun, voin piirtää saman kuvan koko Suomesta. Tehdään ensin Suomen kartta yhdistämällä maakunnat toisiinsa, koska mistään ei äkkiä löytynyt koko Suomea.
+
+```{r}
+# ogr2ogr("WFS:http://geo.stat.fi/geoserver/tilastointialueet/wfs", "maakunnat.shp", "maakunta1000k_2018")
+
+suomi <- read_sf("maakunnat.shp") %>% st_union()
+```
+Sitten arvotaan asuinruutuihin koordinaatit. Tässä kestää noin 10 minuuttia. Jos aikoo tehdä tätä usein, kannattaa tallentaa koordinaatit tiedostoon.
+```{r}
+ruutupisteet <- ruudut %>%
+  map2(geometry, vaesto, st_sample) %$% 
+  map(st_coordinates) %>%
+  map(as_tibble) %>%
+  bind_rows()
+```
+Sitten piirretään kuva. Haluan tähän kuvaan kokeilla eri fonttia, joten alkuun luen Windowsin fontit sisään R:ään.
+```{r}
+library(extrafont)
+font_import() # tämä ja seuraava tehdään vain kerran
+loadfonts()
+
+p1 <- ggplot(suomi) +
+  geom_sf(fill = "gray20", color = "transparent") +
+  geom_point(data = ruutupisteet, aes(X, Y), size = 0.0025, alpha = 0.04, color = "turquoise") +
+  coord_sf(expand = FALSE) +
+  theme(panel.grid.major = element_line(color = "transparent"),
+        panel.grid.minor = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.background = element_rect(fill = "gray20"),
+        plot.background = element_rect(fill = "gray20"),
+        plot.title = element_text(hjust = 0.5, color = "gray90", size = 50, 
+                                  margin = margin(0, 0, 0.5, 0, "cm")), 
+        plot.subtitle = element_text(hjust = 0.5, color = "gray90", size = 30, 
+                                     margin = margin(0, 0, 1, 0, "cm")),
+        text = element_text(family = "Arial Black")) +
+  labs(x = NULL, y = NULL, title = "Missä suomalaiset asuvat?", 
+       subtitle = "Jokainen suomalainen pisteenä")
+
+ggsave("suomi.png", h = 20, w = 11)
+```
+![](/img/suomi.png)

@@ -1,0 +1,10 @@
+---
+title: Kivisydänprojekti
+author: Pasi Haapakorva
+date: '2018-09-21'
+slug: kivisydänprojekti
+categories: []
+tags: []
+description: ''
+---
+

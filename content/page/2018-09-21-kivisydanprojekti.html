@@ -1,0 +1,16 @@
+---
+title: Kivisydänprojekti
+author: Pasi Haapakorva
+date: '2018-09-21'
+slug: kivisydänprojekti
+categories: []
+tags: []
+description: ''
+---
+
+
+
+<p>Oulun kaupungilla valmisteltiin uutta pysäköintipolitiikkaa vuonna 2017. Kuulin, että kaupungin viranhaltijat eivät saa tietoja Oulun Pysäköinti Oy:n omistamien pysäköintihallien ja -talojen käytöstä, koska kyseessä on osakeyhtiö, jolla on oikeus salaisuuksiinsa. En itse käytä autopysäköintipaikkoja missään, koska en autoile. Minua kuitenkin kiinnostaa keskustan autopysäköinti, koska talojen ja etenkin Kivisydämen rakentamisen myötä tarkoituksena on ollut korvata maanpäällistä pysäköintiä tehokkaammilla toiminnoilla kuten leveämmillä jalkakäytävillä ja nykyaikaisilla pyöräteillä. Tilaa ihmisille, ei autoille.</p>
+<p>Oulun kaupungin tarjoamat liikenteen <a href="http://wp.oulunliikenne.fi/wordpress/avoin-data/">rajapinnat</a> olivat minulle jo <a href="http://wp.oulunliikenne.fi/wordpress/avoin-data/pyorailykavely/">pyöräliikenteen</a> osalta tuttuja. Huomasin, että myös <a href="http://wp.oulunliikenne.fi/wordpress/avoin-data/autoliikenne/rest-rajapinnat/">pysäköintitaloista</a> on tietoa rajapinnalla. Autoliikenteen rajapintatieto kuitenkin poikkeaa pyörä- ja jalankulkuliikenteen tiedoista siten, että rajapinnalla ei ole autoliikenteestä saatavilla mitään historiatietoa. Esimerkiksi Kivisydämestä tiedetään vain <a href="https://www.oulunliikenne.fi/public_traffic_api/parking/parking_details.php?parkingid=6">reaaliaikainen tieto</a>, joka on tietääkseni asetettu saataville kadulla olevia näyttöportaaleja varten.</p>
+<p>Heinäkuussa 2017 käynnistin vuokraamallani serverillä ohjelman, joka puolen tunnin välein kysyy rajapinnalta Kivisydämen ja kaikkien muiden pysäköintitalojen tiedot. Tietoa on nyt kertynyt katkotta jo yli vuoden. Projektin toinen osa on ollut kehittää twitterbotti twiittaamaan säännöllisesti tietoja datasta. Botti twiittaa joka päivä edellisen <a href="https://twitter.com/kivisydanbot/media">päivän käyttötiedon viivakuviona</a>. Maanantaisin nähdään koko edellinen viikko. Muutoin botti twiittaa noin tasatunnein reaaliaikaisin käyttötiedon.</p>
+<p>Seuraavassa kuvassa on 365 päivää Kivisydämen käyttöä. <img src="/img/kivisydan_page.png" /></p>
