@@ -1,10 +1,12 @@
-baseurl = "http://haapakorva.fi/"
+baseurl = "https://haapakorva.fi/"
 title = "Pasi Haapakorva"
 theme = "ghostwriter"
 languageCode = "en-us"
 copyright = "Pasi Haapakorva"
 disqusShortname = "XXX"
 googleAnalytics = "XXX"
+
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [Privacy]
 
@@ -65,4 +67,3 @@ googleAnalytics = "XXX"
     url = "/page/kivisydänprojekti/"
     weight = 3
 
-    ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
