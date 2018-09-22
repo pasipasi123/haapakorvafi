@@ -1,0 +1,29 @@
+---
+title: Kivisydämen vuosi
+author: Pasi Haapakorva
+date: '2018-09-22'
+categories:
+  - liikenne
+tags:
+  - avoin data
+  - liikenne
+  - kivisydän
+slug: kivisydämen-vuosi
+---
+Olen mitannut Kivisydämen ja useiden muiden pysäköintitalojen käyttöä [ohjelmallani](/page/kivisydänprojekti/) jo yli vuoden ajan. Hallin laajentamisen puolesta otetaan joka vuosi [kantaa](https://www.oululehti.fi/uutiset/arinan-johto-toivoo-kivisydamen-laajentamista-6.261.327161.bb8c318d40), vaikka julkisesti ei ole tiedossa, kuinka paljon hallia käytetään. Kivisydän on ollut puolenkymmentä kertaa täynnä päivinä, jolloin keskustassa on ollut samaan aikaan useita tapahtumia tai kun käynnissä on ollut kovimmat jouluostosruuhkat. Kiinnostavampaa on kuitenkin katsoa, paljonko hallia käytetään ihan tavallisena arkena.
+
+Kivisydämessä on 900 pysäköintiruutua. Kaikki 900 paikkaa eivät kuitenkaan oikeastaan koskaan ole vapaasti käytettävissä keskustassa asiointiin. Tarkasteltavan vuoden aikana, heinäkuu 2017 – heinäkuu 2018, hallin 900 paikasta on arkisin varattu kausipaikoiksi noin 150 paikkaa ja viikonloppuisin 50 paikkaa. Toisin sanoen arkipäivänä Kivisydämeen mahtuu enintään noin 750 ja viikonloppuna noin 850 autoa kerrallaan.
+
+Seuraavassa kuvassa esitän kokonaisen vuoden Kivisydämen käyttöä niin, että jokaista vuoden 52 viikkoa esittää yksi viiva. Olen värittänyt viivan karkean vuodenajan mukaan siten, että huhti–syyskuu merkitään kesäksi ja loka–maaliskuu talveksi.
+![](/img/kivisydan_post1_1.png)
+Kuvasta nähdään, että viivat yltävät muutamia kertoja arkipäivän ja viikonlopun maksimeihin, mutta suurin viivamassa on useiden satojen autojen verran alempana. Käyttö näyttää olevan talvella runsaampaa kuin kesällä.
+
+Katsotaan seuraavaksi Kivisydämen huipputunnin aikaista vapaiden paikkojen määrää. Lasken jokaisen vuorokauden maksimitunnilta vapaan tilan määrän ja lasken niistä keskiarvon vuodenajan ja viikonpäivän mukaan. 
+![](/img/kivisydan_post1_2.png)
+Nyt talven kesää runsaampi käyttö näkyy selvästi. Käyttö viikonpäivän mukaan jakautuu eri tavalla vuodenajan mukaan, sillä talvella käyttö kasvaa selvästi lauantaita kohti, mutta kesällä ero viikonpäivien välillä on pienempi.
+
+Kesäkautena Kivisydämessä on huipputunnin aikana vuorokaudesta riippumatta keskimäärin noin 400 vapaata pysäköintipaikkaa. Talvikaudella vapaita paikkoja on loppuviikkoa kohti alenevasti niin, että maanantaina paikkoja on keskimäärin huipputunnin aikana vapaana noin 400 ja lauantaina noin 200. Osa talven runsaammasta käytöstä selittynee loppuvuoden kiivaalla shoppailulla. Voi myös olla, että talven pakkasilla lämmin halli kiinnostaa enemmän kuin kesällä. Kesällä myös pyöräillään paljon enemmän kuin talvella.
+
+Datan perusteella Kivisydämen käyttöä voisi lisätä paljon. Maanpäällisiä paikkoja tulee vähentää kuten on luvattu, jotta kaduille saadaan lisää elämää ja kalliille maanalaiselle pysäköintihallille käyttöä koko investoinnin edestä. Vasta käytön lisäännyttyä kannattaa puhua lisäinvestoinneista Kivisydämeen.
+
+Jos joku kysymys Kivisydämen käytössä kaihertaa mieltä, otan mielelläni vastaan analyysiehtotuksia. Sivun ylälaidassa on esimerkiksi twitter- ja sähköpostiyhteystietoni.

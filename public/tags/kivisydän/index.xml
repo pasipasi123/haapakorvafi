@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Pasi Haapakorva</title>
-    <link>/post/</link>
-    <description>Recent content in Posts on Pasi Haapakorva</description>
+    <title>Kivisydän on Pasi Haapakorva</title>
+    <link>/tags/kivisyd%C3%A4n/</link>
+    <description>Recent content in Kivisydän on Pasi Haapakorva</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Pasi Haapakorva</copyright>
     <lastBuildDate>Sat, 22 Sep 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/kivisyd%C3%A4n/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -20,18 +20,6 @@
       <guid>/2018/09/22/2018-09-22-kivisyd%C3%A4men-vuosi-osa-1/</guid>
       <description>Olen mitannut Kivisydämen ja useiden muiden pysäköintitalojen käyttöä ohjelmallani jo yli vuoden ajan. Hallin laajentamisen puolesta otetaan joka vuosi kantaa, vaikka julkisesti ei ole tiedossa, kuinka paljon hallia käytetään. Kivisydän on ollut puolenkymmentä kertaa täynnä päivinä, jolloin keskustassa on ollut samaan aikaan useita tapahtumia tai kun käynnissä on ollut kovimmat jouluostosruuhkat. Kiinnostavampaa on kuitenkin katsoa, paljonko hallia käytetään ihan tavallisena arkena.
 Kivisydämessä on 900 pysäköintiruutua. Kaikki 900 paikkaa eivät kuitenkaan oikeastaan koskaan ole vapaasti käytettävissä keskustassa asiointiin.</description>
-    </item>
-    
-    <item>
-      <title>Jokainen oululainen kartalla</title>
-      <link>/2018/09/19/2018-09-19-jokainen-oululainen-kartalla/</link>
-      <pubDate>Wed, 19 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/2018/09/19/2018-09-19-jokainen-oululainen-kartalla/</guid>
-      <description>Kun näin Näytä datan piirtäneen jokaisen suomalaisen kartalle (inspiroituneena tästä ja tästä) käyttäen avoimia kotimaisia paikkatietoaineistoja ja ilmaista paikkatieto-ohjelmistoa QGIS:iä, halusin kokeilla onnistuisiko minulta ohjelmoida vastaava kuva R:llä.
-Viime vuosina R on kehittynyt voimakkaasti. Tidyversen ympärille on kertynyt kokonainen uusi koulukunta R-ohjelmoijia. Tidyversen paketit kuten dplyr ja purrr helpottavat ja nopeuttavat datan käsittelyä. Samaan aikaan myös paikkatietoaineistojen käsittelyyn on kehittynyt uusia työkaluja, kuten sf-paketti.
-Ensin haetaan dataa:
-library(tidyverse)library(sf)library(magrittr) # %$%-operaattori# library(gdalUtils)# # ogr2ogr(&amp;quot;WFS:http://geo.</description>
     </item>
     
   </channel>

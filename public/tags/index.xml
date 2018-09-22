@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Pasi Haapakorva</copyright>
-    <lastBuildDate>Wed, 19 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>Avoin Data</title>
       <link>/tags/avoin-data/</link>
-      <pubDate>Wed, 19 Sep 2018 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 22 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>/tags/avoin-data/</guid>
       <description></description>
@@ -27,6 +27,24 @@
       <pubDate>Wed, 19 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>/tags/gis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kivisydän</title>
+      <link>/tags/kivisyd%C3%A4n/</link>
+      <pubDate>Sat, 22 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/kivisyd%C3%A4n/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Liikenne</title>
+      <link>/tags/liikenne/</link>
+      <pubDate>Sat, 22 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/liikenne/</guid>
       <description></description>
     </item>
     

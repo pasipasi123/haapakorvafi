@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2018/09/22/2018-09-22-kivisyd%C3%A4men-vuosi-osa-1/</loc>
+    <lastmod>2018-09-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/page/kivisyd%C3%A4nprojekti/</loc>
     <lastmod>2018-09-21T00:00:00+00:00</lastmod>
   </url>
@@ -34,13 +39,25 @@
   
   <url>
     <loc>/tags/avoin-data/</loc>
-    <lastmod>2018-09-19T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/gis/</loc>
     <lastmod>2018-09-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/kivisyd%C3%A4n/</loc>
+    <lastmod>2018-09-22T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/liikenne/</loc>
+    <lastmod>2018-09-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -52,13 +69,13 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2018-09-21T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-09-19T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -70,7 +87,7 @@
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2018-09-19T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
