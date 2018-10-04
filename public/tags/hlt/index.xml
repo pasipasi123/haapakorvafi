@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Liikenne on Pasi Haapakorva</title>
-    <link>/tags/liikenne/</link>
-    <description>Recent content in Liikenne on Pasi Haapakorva</description>
+    <title>Hlt on Pasi Haapakorva</title>
+    <link>/tags/hlt/</link>
+    <description>Recent content in Hlt on Pasi Haapakorva</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Pasi Haapakorva</copyright>
     <lastBuildDate>Thu, 04 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/liikenne/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/hlt/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -20,16 +20,6 @@
       <guid>/2018/10/04/2018-10-04-oulun-kaupunkialueella-joka-nelj%C3%A4s-matka-tehd%C3%A4%C3%A4n-polkupy%C3%B6r%C3%A4ll%C3%A4/</guid>
       <description>Huhtikuussa aiemmin tänä vuonna julkaistiin uusi valtakunnallinen henkilöliikennetutkimus. Kyseessä on viiden vuoden välein Liikenneviraston tekemä tutkimus suomalaisten kulkutavoista, joka on kattavin maassa tehtävä tutkimus kulkutavoista. Poiketen kaupunkien itse tekemistä liikennetutkimuksista, joissa tyypillisesti tutkitaan esimerkiksi yhtä viikkoa syksyllä, Liikenneviraston tutkimus koskee liikkumista kokonaisen vuoden ajan, tässä tapauksessa vuonna 2016.
 Oulu tunnetaan pyöräilykaupunkina, ja pyöräilyn osuus onkin edelleen Suomen korkein. Oulun seudulla on tässä tutkimuksessa tehty lisäotos, jolla on saatu tarkempia tietoja muun muassa tarkempia alueellisia tarkasteluja varten.</description>
-    </item>
-    
-    <item>
-      <title>Kivisydämen vuosi</title>
-      <link>/2018/09/22/2018-09-22-kivisyd%C3%A4men-vuosi-osa-1/</link>
-      <pubDate>Sat, 22 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/2018/09/22/2018-09-22-kivisyd%C3%A4men-vuosi-osa-1/</guid>
-      <description>Olen mitannut Kivisydämen ja useiden muiden pysäköintitalojen käyttöä ohjelmallani jo yli vuoden ajan. Hallin laajentamisen puolesta otetaan joka vuosi kantaa, vaikka julkisesti ei ole tiedossa, kuinka paljon hallia käytetään. Kivisydän on ollut puolenkymmentä kertaa täynnä päivinä, jolloin keskustassa on ollut samaan aikaan useita tapahtumia tai kun käynnissä on ollut kovimmat jouluostosruuhkat. Kiinnostavampaa on kuitenkin katsoa, paljonko hallia käytetään ihan tavallisena arkena.
-Kivisydämessä on 900 pysäköintiruutua. Kaikki 900 paikkaa eivät kuitenkaan oikeastaan koskaan ole vapaasti käytettävissä keskustassa asiointiin.</description>
     </item>
     
   </channel>
