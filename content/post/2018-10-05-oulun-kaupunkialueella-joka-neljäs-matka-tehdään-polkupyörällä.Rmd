@@ -1,0 +1,32 @@
+---
+title: Oulun kaupunkialueella joka neljäs matka tehdään polkupyörällä
+author: Pasi Haapakorva
+date: '2018-10-05'
+tags:
+  - avoin data
+  - hlt
+  - liikenne
+slug: oulun-kaupunkialueella-joka-neljäs-matka-tehdään-polkupyörällä
+---
+Huhtikuussa aiemmin tänä vuonna julkaistiin uusi [valtakunnallinen henkilöliikennetutkimus](https://www.liikennevirasto.fi/tilastot/henkiloliikennetutkimus#.W7ZGsGgzavs). Kyseessä on viiden vuoden välein Liikenneviraston tekemä tutkimus suomalaisten kulkutavoista, joka on kattavin Suomessa tehtävä tutkimus kulkutavoista. Poiketen kaupunkien itse tekemistä liikennetutkimuksista, joissa tyypillisesti tutkitaan esimerkiksi yhtä viikkoa syksyllä, Liikenneviraston tutkimus koskee liikkumista kokonaisen vuoden ajan, tässä tapauksessa vuonna 2016.
+
+Oulu tunnetaan pyöräilykaupunkina, ja pyöräilyn osuus onkin edelleen [Suomen korkein](https://www.kaleva.fi/uutiset/oulu/tutkimus-oululaiset-ovat-suomen-innokkaimpia-pyorailijoita/790250/). Oulun seudulla on tässä tutkimuksessa tehty lisäotos, jolla on saatu tarkempia tietoja muun muassa tarkempia alueellisia tarkasteluja varten. Lisäotoksen raporttiin voi tutustua [tästä](https://www.liikennevirasto.fi/documents/20473/434710/Seutujulkaisu_HLT2016_Oulun_seutu.pdf/02c88fbd-a9fb-4905-a637-f72a3cd47f5d) tai sitten voi upottautua Oulun tai muiden seutujen monikymmenvälilehtisiin [tulostaulukoihin](https://www.liikennevirasto.fi/tilastot/henkiloliikennetutkimus/tuloksia-taulukoina#.W7ZJmWgzavs).
+
+Vaikka Oulun seudun pyöräilyn osuus on maan korkein, suunta on ollut laskeva vuosikymmenten ajan ja on edelleen. [Vanhoista liikennetutkimuksista](https://www.ouka.fi/c/document_library/get_file?uuid=ac7b5010-1696-4ff3-999d-1919f8ebda5c&groupId=173371) nähdään, että pyöräilyn osuus on nykyään alhaisempi kuin koskaan mittaushistoriassa.
+
+Toinen huomioitava asia tutkimuksessa on, että Oulu ja Oulun seutu ovat valtavia alueita. Pelkästään Oulu on 100 kilometriä pitkä etelästä pohjoiseen ja valtaosin [hyvin harvaan asuttu](https://haapakorva.fi/2018/09/19/2018-09-19-jokainen-oululainen-kartalla/). Pyöräilyn suurin potentiaali on suhteellisen tiheällä kaupunkialueella, missä pyöräillen on mahdollista nopeasti saavuttaa kaikki arjen kohteet. Koko seudun pyöräilyn osuutta kiinnostavampaa onkin katsoa tarkemmin alueittaisia tunnuslukuja. Eräs uudehko alueluokittelu on [kaupunki–maaseutu-luokitus](http://www.ymparisto.fi/kaupunkimaaseutuluokitus), joka on laadittu juuri tällaiseen tarpeeseen. Kunnan rajat eivät nykyään useinkaan tarjoa mielekästä tilastoaluetta, koska kunta on alueena hyvin moninainen. Kaupunki–maaseutu-luokitus sen sijaan ei kunnioita kuntien rajoja vaan perustuu alueiden matemaattisiin ominaisuuksiin hyvin pienellä raekoolla. Luokittelu alkaa sisemmästä kaupunkialueesta ja päättyy harvaan asuttuun maaseutuun.
+
+Otetaan siis Oulun seutu ja lisäksi kaikki muut henkilöliikennetutkimuksen lisäotosten alueet tarkempaan analyysiin. Menemättä tarkemmin ohjelmointiin, katsotaan heti tuloksia. Otsikon kaupunkialueella tarkoitan sisempää kaupunkialuetta, joka Oulun osalta näkyy tässä kuvassa (avaamalla kuvan uuteen välilehteen saat sen suuremmaksi).
+
+![](/post/2018-10-04-oulun-kaupunkialueella-joka-neljäs-matka-tehdään-polkupyörällä_files/sisempi_perus.jpeg)
+
+Sisempi kaupunkialue sisältää Oulussa keskustan lisäksi etelässä Nokelan, Lintulan ja Kaukovainion; idässä Svaaninsuon, Kastellin ja Parkkisenkankaan ja pohjoisessa kaupunginosia Linnanmaalle saakka.
+
+Seuraavassa kuvassa esitän eri kulkutapojen osuudet liikenteestä kaupunki–maaseutu-luokittain kaikilla henkilöliikennetutkimuksen lisäotosten alueilla. Lukemat ovat osuuksia koko vuoden liikenteestä. Oulun sisemmän kaupunkialueen pyöräilyn kulkutapaosuus 23,1 prosenttia on hyvin poikkeava. Lähes joka neljäs matka siis ympäri vuoden tehdään polkupyörällä. Pyöräily nostaa Oulun sisemmän kaupunkialueen kestävien kulkutapojen (kävely, pyöräily, joukkoliikenne) osuuden yli 50 prosenttiin, kun joukkoliikenteen osuus jää alhaiseksi ja kävelynkin verrattaen matalaksi.
+
+![](/post/2018-10-04-oulun-kaupunkialueella-joka-neljäs-matka-tehdään-polkupyörällä_files/nest_kuva.png)
+Pyöräilyn osuus on siis edelleen pyöräilylle otollisimmalla alueella pyöräilykaupunkimaisen korkea. Ympärivuotinen korkea osuus osoittaa, että pyöräily on myös talvipakkasilla hyvin monen oululaisen valinta kulkutavaksi.
+
+
+
+
