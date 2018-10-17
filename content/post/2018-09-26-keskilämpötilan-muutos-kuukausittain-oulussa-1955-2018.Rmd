@@ -53,7 +53,7 @@ Seuraavaksi luomme listan query-osotteita, jotka kukin palauttavat rajapinnalta 
 
 Jotta voidaan varmistaa ehjä data, poimitaan aineistoa kahdelta eri sääasemalta.
 
-Päivämäärät on muutettava `character`-tyyppisiksi, koska `pmap` kärsii R:n [bugista](https://github.com/tidyverse/purrr/issues/358#issuecomment-363091446), joka jonka vuoksi `date`-tyypin vektoria ei voi käyttää, mutta luotaviin queryosoitteisiin muunnoksella ei ole vaikutusta.
+Päivämäärät on muutettava `character`-tyyppisiksi, koska `pmap` kärsii R:n [bugista](https://github.com/tidyverse/purrr/issues/358#issuecomment-363091446), jonka vuoksi `date`-tyypin vektoria ei voi käyttää, mutta luotaviin queryosoitteisiin muunnoksella ei ole vaikutusta.
 
 `pmap`:lle ei tarvitse antaa sarakkeiden nimiä ollenkaan, jos sarakkeiden nimet vastaavat funktion argumenttien nimiä. Tässä ne ovat tahallaan samat.
 

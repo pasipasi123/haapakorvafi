@@ -36,7 +36,7 @@ fmi_set_key(&quot;avaimesi-tähän&quot;)
 dates &lt;- tibble(alku = make_date(seq(1950, 2015, 5)), loppu = alku + years(5) - days(1))</code></pre>
 <p>Seuraavaksi luomme listan query-osotteita, jotka kukin palauttavat rajapinnalta yhden siivun dataa. Ensin kirjoitetaan funktio, jossa täytämme valmiiksi <code>fmir</code>-paketin <code>fmi_query</code>-funktion vakiona pysyvät argumentit. Tässä tapauksessa tosin vain tietotyyppi, joka on tässä <code>&quot;monthly&quot;</code>, pysyy vakiona.</p>
 <p>Jotta voidaan varmistaa ehjä data, poimitaan aineistoa kahdelta eri sääasemalta.</p>
-<p>Päivämäärät on muutettava <code>character</code>-tyyppisiksi, koska <code>pmap</code> kärsii R:n <a href="https://github.com/tidyverse/purrr/issues/358#issuecomment-363091446">bugista</a>, joka jonka vuoksi <code>date</code>-tyypin vektoria ei voi käyttää, mutta luotaviin queryosoitteisiin muunnoksella ei ole vaikutusta.</p>
+<p>Päivämäärät on muutettava <code>character</code>-tyyppisiksi, koska <code>pmap</code> kärsii R:n <a href="https://github.com/tidyverse/purrr/issues/358#issuecomment-363091446">bugista</a>, jonka vuoksi <code>date</code>-tyypin vektoria ei voi käyttää, mutta luotaviin queryosoitteisiin muunnoksella ei ole vaikutusta.</p>
 <p><code>pmap</code>:lle ei tarvitse antaa sarakkeiden nimiä ollenkaan, jos sarakkeiden nimet vastaavat funktion argumenttien nimiä. Tässä ne ovat tahallaan samat.</p>
 <pre class="r"><code>ouluquery &lt;- function(alku, loppu, paikka) {
   fmi_query(place = paikka, type = &quot;monthly&quot;, starttime = alku, endtime = loppu)
