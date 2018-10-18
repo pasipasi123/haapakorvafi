@@ -8,6 +8,133 @@ tags:
   - r
 description: ''
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, eval = FALSE, warning = FALSE)
+```
 Analysoin [alkukuusta](https://haapakorva.fi/2018/10/05/2018-10-05-oulun-kaupunkialueella-joka-nelj%C3%A4s-matka-tehd%C3%A4%C3%A4n-polkupy%C3%B6r%C3%A4ll%C3%A4/) Liikenneviraston henkilöliikennetutkimuksen [tulostaulukoista](https://www.liikennevirasto.fi/tilastot/henkiloliikennetutkimus/tuloksia-taulukoina#.W8imDmgzavs). Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille ja maakunnalle. Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa [raporteissa](https://www.liikennevirasto.fi/documents/20473/434710/Seutujulkaisu_HLT2016_Oulun_seutu.pdf/02c88fbd-a9fb-4905-a637-f72a3cd47f5d), mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n `purrr`-paketin `map()`-funktioilla.
 
-On silti tehtävä hieman käsityötä. Lataan tulostaulukot selaimen kautta käsin, koska R:n kautta tiedostot eivät tule ehyenä perille.
+Jotta saan käsityön minimoitua, lataan taulukot suoraan R:llä katsomatta nettisivua lainkaan. Lunttaan tosin käsipelillä kiinnostavan taulun nimen ja sarakkeiden sisällön.
+
+```{r}
+library(tidyverse)
+library(rvest)
+
+# tekstinkäsittelyfunktiot
+tekstit <- function(x) {
+   x <- gsub("_tulokset", "", x)
+   x <- gsub("_", " ", x)
+   x <- gsub("ät Hä", "ät-Hä", x) # Päijät-Häme special
+}
+isoksi <- function(x) {
+   y <- str_sub(x, 1, 1)
+   paste0(toupper(y), str_sub(x, 2, nchar(x)))
+}
+
+# sama linkki kuin ylempänä tekstissä
+tulossivu <- read_html("https://www.liikennevirasto.fi/tilastot/henkiloliikennetutkimus/tuloksia-taulukoina#.W8imDmgzavs")
+
+# haetaan osoitteet
+urlit <- html_nodes(tulossivu, "a") %>% 
+   html_attr("href") %>% 
+   subset(str_detect(., "_tulo")) %>% 
+   paste0("https://www.liikennevirasto.fi", .) %>% 
+   enframe() %>% 
+   transmute(name = map_chr(str_split(value, "/"), str_subset, "\\.xlsx$") %>% 
+                str_replace(".xlsx", "") %>% 
+                tekstit() %>% 
+                isoksi(), 
+             value)
+```
+Saan kätevästi tauluun kiinnostavien tiedostojen osoitteet:
+```{r}
+> urlit
+# A tibble: 10 x 2
+   name                      value                                                                                                                     
+   <chr>                     <chr>                                                                                                                     
+ 1 Helsingin seutu           https://www.liikennevirasto.fi/documents/20473/439901/Helsingin_seutu_tulokset.xlsx/e20b43ce-1794-4539-bb4f-6ab1c2eab5f3  
+ 2 Oulun seutu               https://www.liikennevirasto.fi/documents/20473/439901/Oulun_seutu_tulokset.xlsx/66e63701-d199-42cc-82a9-29ba592e4906      
+ 3 Tampereen seutu           https://www.liikennevirasto.fi/documents/20473/439901/Tampereen_seutu_tulokset.xlsx/cafbffb8-0c7d-427c-810c-5c50feb522f5  
+ 4 Turun seutu               https://www.liikennevirasto.fi/documents/20473/439901/Turun_seutu_tulokset.xlsx/c52cc5a8-6c6e-4623-9f46-929021b1ca36      
+ 5 Joensuun ydinkaupunkiseu~ https://www.liikennevirasto.fi/documents/20473/439901/Joensuun_ydinkaupunkiseutu_tulokset.xlsx/ba82ff62-9feb-40e9-bda0-b3~
+ 6 Päijät-Häme               https://www.liikennevirasto.fi/documents/20473/439901/Päijät_Häme_tulokset.xlsx/b6a875b7-9538-4c8b-9064-6f5b68efe230      
+ 7 Riihimäen seutu           https://www.liikennevirasto.fi/documents/20473/439901/Riihimäen_seutu_tulokset.xlsx/552e0bbc-ec09-4364-a4e7-3204cd39acd0  
+ 8 Salo                      https://www.liikennevirasto.fi/documents/20473/439901/Salo_tulokset.xlsx/866ffaaf-b158-4a1a-879d-040299e37f3d             
+ 9 Itäinen Uusimaa           https://www.liikennevirasto.fi/documents/20473/439901/itäinen_Uusimaa_tulokset.xlsx/c5c5412f-fc13-404e-86d0-d0ed6953b171  
+10 Läntinen Uusimaa          https://www.liikennevirasto.fi/documents/20473/439901/läntinen_Uusimaa_tulokset.xlsx/2dc40f93-6ca1-48f8-a8dd-56947553e9d4 
+```
+Seuraavaksi muutamalla rivillä ensin lataan kaikki tiedostot hakemistoon ja luen ne sisään.
+```{r}
+# ladataan tiedostot
+# dir.create("data/hlt/", recursive = TRUE) # tarvittaessa
+urlit %>% 
+   pwalk(~ download.file(..2, destfile = paste0("data/hlt/", ..1, ".xlsx"), method = "curl"))
+
+# tsekkasin myös sheetin ja kiinnostavat rivit
+data_raw <- urlit %>% 
+   select(name) %>% 
+   mutate(path = paste0("data/hlt/", name, ".xlsx") %>% enc2native()) %>% # ääkkösiä nimissä
+   mutate(data = map(path, readxl::read_excel, sheet = "D183", skip = 12, n_max = 9, col_names = FALSE))
+```
+Data on listasarakkeessa.
+```{r}
+> data_raw
+# A tibble: 10 x 3
+   name                       path                                     data            
+   <chr>                      <chr>                                    <list>          
+ 1 Helsingin seutu            data/hlt/Helsingin seutu.xlsx            <tibble [8 x 9]>
+ 2 Oulun seutu                data/hlt/Oulun seutu.xlsx                <tibble [8 x 9]>
+ 3 Tampereen seutu            data/hlt/Tampereen seutu.xlsx            <tibble [8 x 9]>
+ 4 Turun seutu                data/hlt/Turun seutu.xlsx                <tibble [8 x 9]>
+ 5 Joensuun ydinkaupunkiseutu data/hlt/Joensuun ydinkaupunkiseutu.xlsx <tibble [8 x 9]>
+ 6 Päijät-Häme                data/hlt/Päijät-Häme.xlsx                <tibble [8 x 9]>
+ 7 Riihimäen seutu            data/hlt/Riihimäen seutu.xlsx            <tibble [8 x 9]>
+ 8 Salo                       data/hlt/Salo.xlsx                       <tibble [8 x 9]>
+ 9 Itäinen Uusimaa            data/hlt/Itäinen Uusimaa.xlsx            <tibble [8 x 9]>
+10 Läntinen Uusimaa           data/hlt/Läntinen Uusimaa.xlsx           <tibble [8 x 9]>
+```
+Siistitään seuraavaksi data ja muotoillaan vielä kuvaakin varten oma taulunsa.
+```{r}
+# tsekkasin sarakkeiden nimet etukäteen
+nimet <- c("tarkoitus", "kk", "pp", "jk", "ha1", "ha2", "muu", "kaikki")
+
+data_all <- data_raw %>% 
+   select(-path) %>% 
+   unnest() %>% 
+   select(-ncol(.)) %>% # viimeinen tyhjä sarake pois
+   set_names("name", nimet) %>% 
+   mutate(tarkoitus = isoksi(tarkoitus)) %>% 
+   mutate_at(vars(name, tarkoitus), as_factor)
+
+# muotoillaan data kuvaa varten
+data_kuva <- data_all %>% 
+   transmute(name, tarkoitus, kk, pp, jk, ha = ha1 + ha2, muu, kaikki) %>% # kuski ja kyytiläinen yhteen henkilöautoluokkaan
+   mutate(tarkoitus = fct_relevel(tarkoitus, "Työ", "Työasia", "Koulu, opiskelu", "Ostos", 
+                                  "Asiointi, muu henkilökohtainen", "Saattaminen, kyyditseminen", "Vapaa-aika")) %>% 
+   gather(kt, matkat, kk:muu) %>% 
+   mutate(kt = as_factor(kt)) %>% 
+   filter(!str_detect(tarkoitus, "Kaikki")) %>% 
+   group_by(name, tarkoitus) %>% 
+   mutate(p_tar = matkat / sum(matkat)) %>% # pyöräilyn osuus tarkoituksesta
+   group_by(name, kt) %>% 
+   mutate(p_kt = matkat / sum(matkat)) %>% # tarkoituksen osuus pyöräilystä
+   ungroup()
+```
+Ja piirretään kuva. 
+```{r}
+data_kuva %>% 
+   ggplot(aes(tarkoitus %>% fct_rev(), p_tar, fill = kt %>% fct_rev())) +
+   facet_wrap(~ name, ncol = 3) +
+   geom_col() +
+   coord_flip() +
+   geom_hline(yintercept = c(0.25, 0.5, 0.75), lty = 3, color = "gray50") +
+   ggrepel::geom_text_repel(aes(label = format(round(p_tar * 100, 1), decimal.mark = ",")), 
+                            position = position_stack(vjust = 0.5), size = 3, 
+                            direction = "x", box.padding = 0, point.padding = 0, segment.colour = "transparent") +
+   scale_fill_brewer(palette = "Set2", name = NULL, labels = rev(c("Jalankulku", "Pyöräily", "Joukkoliikenne", "Henkilöauto", "Muu"))) +
+   scale_y_continuous(labels = function(x) paste(x * 100, "%")) +
+   guides(fill = guide_legend(reverse = TRUE)) +
+   theme_minimal() +
+   theme(legend.position = "top") +
+   labs(x = NULL, y = NULL)
+```
+![](/content/post/2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-llä_files/tarkoitus_kt_blogi.png)

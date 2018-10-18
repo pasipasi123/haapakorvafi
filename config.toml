@@ -30,6 +30,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     headline = "Haapakorva"
     #description = "Data-tiede, "
     github = "https://github.com/pasipasi123/"
+    flickr = "https://www.flickr.com/photos/pasipasi/"
     #gitlab = "https://gitlab.com/XXX"
     #linkedin = "https://linkedin.com/in/XXX/"
     #gplus = "https://google.com/+XXX"

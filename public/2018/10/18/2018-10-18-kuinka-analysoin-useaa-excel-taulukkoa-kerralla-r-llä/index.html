@@ -5,15 +5,17 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Kuinka analysoin useaa excel-taulukkoa kerralla R:llä &middot; Pasi Haapakorva</title>
         <meta name="description" content="Analysoin alkukuusta Liikenneviraston henkilöliikennetutkimuksen tulostaulukoista. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille ja maakunnalle. Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa raporteissa, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n purrr-paketin map()-funktioilla.
-On silti tehtävä hieman käsityötä. Lataan tulostaulukot selaimen kautta käsin, koska R:n kautta tiedostot eivät tule ehyenä perille.">
+Jotta saan käsityön minimoitua, lataan taulukot suoraan R:llä katsomatta nettisivua lainkaan. Lunttaan tosin käsipelillä kiinnostavan taulun nimen ja sarakkeiden sisällön.
+library(tidyverse)library(rvest)# tekstinkäsittelyfunktiottekstit &lt;- function(x) {x &lt;- gsub(&quot;_tulokset&quot;, &quot;&quot;, x)x &lt;- gsub(&quot;_&quot;, &quot; &quot;, x)x &lt;- gsub(&quot;ät Hä&quot;, &quot;ät-Hä&quot;, x) # Päijät-Häme special}isoksi &lt;- function(x) {y &lt;- str_sub(x, 1, 1)paste0(toupper(y), str_sub(x, 2, nchar(x)))}# sama linkki kuin ylempänä tekstissätulossivu &lt;- read_html(&quot;https://www.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
-        <meta name="generator" content="Hugo 0.49" />
+        <meta name="generator" content="Hugo 0.49.2" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="og:title" content="Kuinka analysoin useaa excel-taulukkoa kerralla R:llä">
 <meta property="og:description" content="Analysoin alkukuusta Liikenneviraston henkilöliikennetutkimuksen tulostaulukoista. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille ja maakunnalle. Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa raporteissa, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n purrr-paketin map()-funktioilla.
-On silti tehtävä hieman käsityötä. Lataan tulostaulukot selaimen kautta käsin, koska R:n kautta tiedostot eivät tule ehyenä perille.">
+Jotta saan käsityön minimoitua, lataan taulukot suoraan R:llä katsomatta nettisivua lainkaan. Lunttaan tosin käsipelillä kiinnostavan taulun nimen ja sarakkeiden sisällön.
+library(tidyverse)library(rvest)# tekstinkäsittelyfunktiottekstit &lt;- function(x) {x &lt;- gsub(&quot;_tulokset&quot;, &quot;&quot;, x)x &lt;- gsub(&quot;_&quot;, &quot; &quot;, x)x &lt;- gsub(&quot;ät Hä&quot;, &quot;ät-Hä&quot;, x) # Päijät-Häme special}isoksi &lt;- function(x) {y &lt;- str_sub(x, 1, 1)paste0(toupper(y), str_sub(x, 2, nchar(x)))}# sama linkki kuin ylempänä tekstissätulossivu &lt;- read_html(&quot;https://www.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="/2018/10/18/2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-ll%C3%A4/">
         <link rel="stylesheet" href="/dist/styles.css">
@@ -112,7 +114,121 @@ if (!doNotTrack) {
     
 
     <p>Analysoin <a href="https://haapakorva.fi/2018/10/05/2018-10-05-oulun-kaupunkialueella-joka-nelj%C3%A4s-matka-tehd%C3%A4%C3%A4n-polkupy%C3%B6r%C3%A4ll%C3%A4/">alkukuusta</a> Liikenneviraston henkilöliikennetutkimuksen <a href="https://www.liikennevirasto.fi/tilastot/henkiloliikennetutkimus/tuloksia-taulukoina#.W8imDmgzavs">tulostaulukoista</a>. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille ja maakunnalle. Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa <a href="https://www.liikennevirasto.fi/documents/20473/434710/Seutujulkaisu_HLT2016_Oulun_seutu.pdf/02c88fbd-a9fb-4905-a637-f72a3cd47f5d">raporteissa</a>, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n <code>purrr</code>-paketin <code>map()</code>-funktioilla.</p>
-<p>On silti tehtävä hieman käsityötä. Lataan tulostaulukot selaimen kautta käsin, koska R:n kautta tiedostot eivät tule ehyenä perille.</p>
+<p>Jotta saan käsityön minimoitua, lataan taulukot suoraan R:llä katsomatta nettisivua lainkaan. Lunttaan tosin käsipelillä kiinnostavan taulun nimen ja sarakkeiden sisällön.</p>
+<pre class="r"><code>library(tidyverse)
+library(rvest)
+
+# tekstinkäsittelyfunktiot
+tekstit &lt;- function(x) {
+   x &lt;- gsub(&quot;_tulokset&quot;, &quot;&quot;, x)
+   x &lt;- gsub(&quot;_&quot;, &quot; &quot;, x)
+   x &lt;- gsub(&quot;ät Hä&quot;, &quot;ät-Hä&quot;, x) # Päijät-Häme special
+}
+isoksi &lt;- function(x) {
+   y &lt;- str_sub(x, 1, 1)
+   paste0(toupper(y), str_sub(x, 2, nchar(x)))
+}
+
+# sama linkki kuin ylempänä tekstissä
+tulossivu &lt;- read_html(&quot;https://www.liikennevirasto.fi/tilastot/henkiloliikennetutkimus/tuloksia-taulukoina#.W8imDmgzavs&quot;)
+
+# haetaan osoitteet
+urlit &lt;- html_nodes(tulossivu, &quot;a&quot;) %&gt;% 
+   html_attr(&quot;href&quot;) %&gt;% 
+   subset(str_detect(., &quot;_tulo&quot;)) %&gt;% 
+   paste0(&quot;https://www.liikennevirasto.fi&quot;, .) %&gt;% 
+   enframe() %&gt;% 
+   transmute(name = map_chr(str_split(value, &quot;/&quot;), str_subset, &quot;\\.xlsx$&quot;) %&gt;% 
+                str_replace(&quot;.xlsx&quot;, &quot;&quot;) %&gt;% 
+                tekstit() %&gt;% 
+                isoksi(), 
+             value)</code></pre>
+<p>Saan kätevästi tauluun kiinnostavien tiedostojen osoitteet:</p>
+<pre class="r"><code>&gt; urlit
+# A tibble: 10 x 2
+   name                      value                                                                                                                     
+   &lt;chr&gt;                     &lt;chr&gt;                                                                                                                     
+ 1 Helsingin seutu           https://www.liikennevirasto.fi/documents/20473/439901/Helsingin_seutu_tulokset.xlsx/e20b43ce-1794-4539-bb4f-6ab1c2eab5f3  
+ 2 Oulun seutu               https://www.liikennevirasto.fi/documents/20473/439901/Oulun_seutu_tulokset.xlsx/66e63701-d199-42cc-82a9-29ba592e4906      
+ 3 Tampereen seutu           https://www.liikennevirasto.fi/documents/20473/439901/Tampereen_seutu_tulokset.xlsx/cafbffb8-0c7d-427c-810c-5c50feb522f5  
+ 4 Turun seutu               https://www.liikennevirasto.fi/documents/20473/439901/Turun_seutu_tulokset.xlsx/c52cc5a8-6c6e-4623-9f46-929021b1ca36      
+ 5 Joensuun ydinkaupunkiseu~ https://www.liikennevirasto.fi/documents/20473/439901/Joensuun_ydinkaupunkiseutu_tulokset.xlsx/ba82ff62-9feb-40e9-bda0-b3~
+ 6 Päijät-Häme               https://www.liikennevirasto.fi/documents/20473/439901/Päijät_Häme_tulokset.xlsx/b6a875b7-9538-4c8b-9064-6f5b68efe230      
+ 7 Riihimäen seutu           https://www.liikennevirasto.fi/documents/20473/439901/Riihimäen_seutu_tulokset.xlsx/552e0bbc-ec09-4364-a4e7-3204cd39acd0  
+ 8 Salo                      https://www.liikennevirasto.fi/documents/20473/439901/Salo_tulokset.xlsx/866ffaaf-b158-4a1a-879d-040299e37f3d             
+ 9 Itäinen Uusimaa           https://www.liikennevirasto.fi/documents/20473/439901/itäinen_Uusimaa_tulokset.xlsx/c5c5412f-fc13-404e-86d0-d0ed6953b171  
+10 Läntinen Uusimaa          https://www.liikennevirasto.fi/documents/20473/439901/läntinen_Uusimaa_tulokset.xlsx/2dc40f93-6ca1-48f8-a8dd-56947553e9d4 </code></pre>
+<p>Seuraavaksi muutamalla rivillä ensin lataan kaikki tiedostot hakemistoon ja luen ne sisään.</p>
+<pre class="r"><code># ladataan tiedostot
+# dir.create(&quot;data/hlt/&quot;, recursive = TRUE) # tarvittaessa
+urlit %&gt;% 
+   pwalk(~ download.file(..2, destfile = paste0(&quot;data/hlt/&quot;, ..1, &quot;.xlsx&quot;), method = &quot;curl&quot;))
+
+# tsekkasin myös sheetin ja kiinnostavat rivit
+data_raw &lt;- urlit %&gt;% 
+   select(name) %&gt;% 
+   mutate(path = paste0(&quot;data/hlt/&quot;, name, &quot;.xlsx&quot;) %&gt;% enc2native()) %&gt;% # ääkkösiä nimissä
+   mutate(data = map(path, readxl::read_excel, sheet = &quot;D183&quot;, skip = 12, n_max = 9, col_names = FALSE))</code></pre>
+<p>Data on listasarakkeessa.</p>
+<pre class="r"><code>&gt; data_raw
+# A tibble: 10 x 3
+   name                       path                                     data            
+   &lt;chr&gt;                      &lt;chr&gt;                                    &lt;list&gt;          
+ 1 Helsingin seutu            data/hlt/Helsingin seutu.xlsx            &lt;tibble [8 x 9]&gt;
+ 2 Oulun seutu                data/hlt/Oulun seutu.xlsx                &lt;tibble [8 x 9]&gt;
+ 3 Tampereen seutu            data/hlt/Tampereen seutu.xlsx            &lt;tibble [8 x 9]&gt;
+ 4 Turun seutu                data/hlt/Turun seutu.xlsx                &lt;tibble [8 x 9]&gt;
+ 5 Joensuun ydinkaupunkiseutu data/hlt/Joensuun ydinkaupunkiseutu.xlsx &lt;tibble [8 x 9]&gt;
+ 6 Päijät-Häme                data/hlt/Päijät-Häme.xlsx                &lt;tibble [8 x 9]&gt;
+ 7 Riihimäen seutu            data/hlt/Riihimäen seutu.xlsx            &lt;tibble [8 x 9]&gt;
+ 8 Salo                       data/hlt/Salo.xlsx                       &lt;tibble [8 x 9]&gt;
+ 9 Itäinen Uusimaa            data/hlt/Itäinen Uusimaa.xlsx            &lt;tibble [8 x 9]&gt;
+10 Läntinen Uusimaa           data/hlt/Läntinen Uusimaa.xlsx           &lt;tibble [8 x 9]&gt;</code></pre>
+<p>Siistitään seuraavaksi data ja muotoillaan vielä kuvaakin varten oma taulunsa.</p>
+<pre class="r"><code># tsekkasin sarakkeiden nimet etukäteen
+nimet &lt;- c(&quot;tarkoitus&quot;, &quot;kk&quot;, &quot;pp&quot;, &quot;jk&quot;, &quot;ha1&quot;, &quot;ha2&quot;, &quot;muu&quot;, &quot;kaikki&quot;)
+
+data_all &lt;- data_raw %&gt;% 
+   select(-path) %&gt;% 
+   unnest() %&gt;% 
+   select(-ncol(.)) %&gt;% # viimeinen tyhjä sarake pois
+   set_names(&quot;name&quot;, nimet) %&gt;% 
+   mutate(tarkoitus = isoksi(tarkoitus)) %&gt;% 
+   mutate_at(vars(name, tarkoitus), as_factor)
+
+# muotoillaan data kuvaa varten
+data_kuva &lt;- data_all %&gt;% 
+   transmute(name, tarkoitus, kk, pp, jk, ha = ha1 + ha2, muu, kaikki) %&gt;% # kuski ja kyytiläinen yhteen henkilöautoluokkaan
+   mutate(tarkoitus = fct_relevel(tarkoitus, &quot;Työ&quot;, &quot;Työasia&quot;, &quot;Koulu, opiskelu&quot;, &quot;Ostos&quot;, 
+                                  &quot;Asiointi, muu henkilökohtainen&quot;, &quot;Saattaminen, kyyditseminen&quot;, &quot;Vapaa-aika&quot;)) %&gt;% 
+   gather(kt, matkat, kk:muu) %&gt;% 
+   mutate(kt = as_factor(kt)) %&gt;% 
+   filter(!str_detect(tarkoitus, &quot;Kaikki&quot;)) %&gt;% 
+   group_by(name, tarkoitus) %&gt;% 
+   mutate(p_tar = matkat / sum(matkat)) %&gt;% # pyöräilyn osuus tarkoituksesta
+   group_by(name, kt) %&gt;% 
+   mutate(p_kt = matkat / sum(matkat)) %&gt;% # tarkoituksen osuus pyöräilystä
+   ungroup()</code></pre>
+<p>Ja piirretään kuva.</p>
+<pre class="r"><code>data_kuva %&gt;% 
+   ggplot(aes(tarkoitus %&gt;% fct_rev(), p_tar, fill = kt %&gt;% fct_rev())) +
+   facet_wrap(~ name, ncol = 3) +
+   geom_col() +
+   coord_flip() +
+   geom_hline(yintercept = c(0.25, 0.5, 0.75), lty = 3, color = &quot;gray50&quot;) +
+   ggrepel::geom_text_repel(aes(label = format(round(p_tar * 100, 1), decimal.mark = &quot;,&quot;)), 
+                            position = position_stack(vjust = 0.5), size = 3, 
+                            direction = &quot;x&quot;, box.padding = 0, point.padding = 0, segment.colour = &quot;transparent&quot;) +
+   scale_fill_brewer(palette = &quot;Set2&quot;, name = NULL, labels = rev(c(&quot;Jalankulku&quot;, &quot;Pyöräily&quot;, &quot;Joukkoliikenne&quot;, &quot;Henkilöauto&quot;, &quot;Muu&quot;))) +
+   scale_y_continuous(labels = function(x) paste(x * 100, &quot;%&quot;)) +
+   guides(fill = guide_legend(reverse = TRUE)) +
+   theme_minimal() +
+   theme(legend.position = &quot;top&quot;) +
+   labs(x = NULL, y = NULL)</code></pre>
+<div class="figure">
+<img src="/content/post/2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-llä_files/tarkoitus_kt_blogi.png" />
+
+</div>
 
 </div>
 
