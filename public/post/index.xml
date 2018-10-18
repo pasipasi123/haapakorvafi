@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Pasi Haapakorva</copyright>
-    <lastBuildDate>Fri, 05 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Oct 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kuinka analysoin useaa excel-taulukkoa kerralla R:llä</title>
+      <link>/2018/10/18/2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-ll%C3%A4/</link>
+      <pubDate>Thu, 18 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/10/18/2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-ll%C3%A4/</guid>
+      <description>Analysoin alkukuusta Liikenneviraston henkilöliikennetutkimuksen tulostaulukoista. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille ja maakunnalle. Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa raporteissa, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n purrr-paketin map()-funktioilla.
+On silti tehtävä hieman käsityötä. Lataan tulostaulukot selaimen kautta käsin, koska R:n kautta tiedostot eivät tule ehyenä perille.</description>
+    </item>
     
     <item>
       <title>Oulun kaupunkialueella joka neljäs matka tehdään polkupyörällä</title>

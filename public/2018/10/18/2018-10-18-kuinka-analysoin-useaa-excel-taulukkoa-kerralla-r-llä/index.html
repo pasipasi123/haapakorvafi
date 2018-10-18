@@ -3,22 +3,22 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Ilmastonmuutos &middot; Pasi Haapakorva</title>
-        <meta name="description" content="">
+        <title>Kuinka analysoin useaa excel-taulukkoa kerralla R:llä &middot; Pasi Haapakorva</title>
+        <meta name="description" content="Analysoin alkukuusta Liikenneviraston henkilöliikennetutkimuksen tulostaulukoista. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille ja maakunnalle. Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa raporteissa, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n purrr-paketin map()-funktioilla.
+On silti tehtävä hieman käsityötä. Lataan tulostaulukot selaimen kautta käsin, koska R:n kautta tiedostot eivät tule ehyenä perille.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
         <meta name="generator" content="Hugo 0.49" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta property="og:title" content="Ilmastonmuutos">
-<meta property="og:description" content="">
-<meta property="og:type" content="website">
-<meta property="og:url" content="/tags/ilmastonmuutos/">
+        <meta property="og:title" content="Kuinka analysoin useaa excel-taulukkoa kerralla R:llä">
+<meta property="og:description" content="Analysoin alkukuusta Liikenneviraston henkilöliikennetutkimuksen tulostaulukoista. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille ja maakunnalle. Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa raporteissa, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n purrr-paketin map()-funktioilla.
+On silti tehtävä hieman käsityötä. Lataan tulostaulukot selaimen kautta käsin, koska R:n kautta tiedostot eivät tule ehyenä perille.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/2018/10/18/2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-ll%C3%A4/">
         <link rel="stylesheet" href="/dist/styles.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        
-            <link href="/tags/ilmastonmuutos/index.xml" rel="alternate" type="application/rss+xml">
         
         
         
@@ -92,32 +92,69 @@ if (!doNotTrack) {
             <div id="container">
 
 
-<div id="post-index" class="container">
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Kuinka analysoin useaa excel-taulukkoa kerralla R:llä</h1>
     
-    <header class="post-header">
-        <h1 class="post-title" itemprop="name">Haapakorva</h1>
-        <p></p>
-    </header>
+    <p class="post-date">
+        <span>Published <time datetime="2018-10-18" itemprop="datePublished">Thu, Oct 18, 2018</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="https://google.com/&#43;XXX" itemprop="url" rel="author">Pasi Haapakorva</a>
+            </span>
+        </span>
+    </p>
+</header>
 
+        <div class="post-content clearfix" itemprop="articleBody">
+    
 
+    <p>Analysoin <a href="https://haapakorva.fi/2018/10/05/2018-10-05-oulun-kaupunkialueella-joka-nelj%C3%A4s-matka-tehd%C3%A4%C3%A4n-polkupy%C3%B6r%C3%A4ll%C3%A4/">alkukuusta</a> Liikenneviraston henkilöliikennetutkimuksen <a href="https://www.liikennevirasto.fi/tilastot/henkiloliikennetutkimus/tuloksia-taulukoina#.W8imDmgzavs">tulostaulukoista</a>. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille ja maakunnalle. Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa <a href="https://www.liikennevirasto.fi/documents/20473/434710/Seutujulkaisu_HLT2016_Oulun_seutu.pdf/02c88fbd-a9fb-4905-a637-f72a3cd47f5d">raporteissa</a>, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n <code>purrr</code>-paketin <code>map()</code>-funktioilla.</p>
+<p>On silti tehtävä hieman käsityötä. Lataan tulostaulukot selaimen kautta käsin, koska R:n kautta tiedostot eivät tule ehyenä perille.</p>
 
-    <ol class="post-list">
-        
-        
-            <li class="post-stub">
-    <a href="/2018/09/26/2018-09-26-keskil%C3%A4mp%C3%B6tilan-muutos-kuukausittain-oulussa-1955-2018/">
-        <h4 class="post-stub-title">Keskilämpötilan muutos kuukausittain Oulussa 1955–2018</h4>
-        
-        
-    </a>
-</li>
-        
-    </ol>
+</div>
 
-    <div class="post-navigation">
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="/tags/r/">r</a>
+            
+        </p>
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=Kuinka%20analysoin%20useaa%20excel-taulukkoa%20kerralla%20R%3all%c3%a4&url=%2f2018%2f10%2f18%2f2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-ll%25C3%25A4%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
         
 
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2018%2f10%2f18%2f2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-ll%25C3%25A4%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+        
     </div>
+</footer>
+
+        
+    <div class="comments">
+        
+    </div>
+
+    </article>
 </div>
 
             </div>
@@ -154,3 +191,4 @@ if (!doNotTrack) {
         <script src="/js/scripts.js"></script>
     </body>
 </html>
+

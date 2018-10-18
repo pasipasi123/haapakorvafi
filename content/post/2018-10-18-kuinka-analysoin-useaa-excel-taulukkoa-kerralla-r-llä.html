@@ -1,0 +1,15 @@
+---
+title: Kuinka analysoin useaa excel-taulukkoa kerralla R:llä
+author: Pasi Haapakorva
+date: '2018-10-18'
+slug: kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-llä
+categories: []
+tags:
+  - r
+description: ''
+---
+
+
+
+<p>Analysoin <a href="https://haapakorva.fi/2018/10/05/2018-10-05-oulun-kaupunkialueella-joka-nelj%C3%A4s-matka-tehd%C3%A4%C3%A4n-polkupy%C3%B6r%C3%A4ll%C3%A4/">alkukuusta</a> Liikenneviraston henkilöliikennetutkimuksen <a href="https://www.liikennevirasto.fi/tilastot/henkiloliikennetutkimus/tuloksia-taulukoina#.W8imDmgzavs">tulostaulukoista</a>. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille ja maakunnalle. Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa <a href="https://www.liikennevirasto.fi/documents/20473/434710/Seutujulkaisu_HLT2016_Oulun_seutu.pdf/02c88fbd-a9fb-4905-a637-f72a3cd47f5d">raporteissa</a>, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n <code>purrr</code>-paketin <code>map()</code>-funktioilla.</p>
+<p>On silti tehtävä hieman käsityötä. Lataan tulostaulukot selaimen kautta käsin, koska R:n kautta tiedostot eivät tule ehyenä perille.</p>
