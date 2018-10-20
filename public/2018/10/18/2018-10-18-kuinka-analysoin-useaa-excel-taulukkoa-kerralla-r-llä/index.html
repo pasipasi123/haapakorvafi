@@ -4,18 +4,16 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Kuinka analysoin useaa excel-taulukkoa kerralla R:llä &middot; Pasi Haapakorva</title>
-        <meta name="description" content="Analysoin alkukuusta Liikenneviraston henkilöliikennetutkimuksen tulostaulukoista. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille ja maakunnalle. Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa raporteissa, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n purrr-paketin map()-funktioilla.
-Jotta saan käsityön minimoitua, lataan taulukot suoraan R:llä katsomatta nettisivua lainkaan. Lunttaan tosin käsipelillä kiinnostavan taulun nimen ja sarakkeiden sisällön.
-library(tidyverse)library(rvest)# tekstinkäsittelyfunktiottekstit &lt;- function(x) {x &lt;- gsub(&quot;_tulokset&quot;, &quot;&quot;, x)x &lt;- gsub(&quot;_&quot;, &quot; &quot;, x)x &lt;- gsub(&quot;ät Hä&quot;, &quot;ät-Hä&quot;, x) # Päijät-Häme special}isoksi &lt;- function(x) {y &lt;- str_sub(x, 1, 1)paste0(toupper(y), str_sub(x, 2, nchar(x)))}# sama linkki kuin ylempänä tekstissätulossivu &lt;- read_html(&quot;https://www.">
+        <meta name="description" content="Analysoin alkukuusta Liikenneviraston henkilöliikennetutkimuksen tulostaulukoista kulkutapoja kaupunki–maaseutu-alueittain. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille (Salo) ja maakunnalle (Päijät-Häme). Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa raporteissa, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n purrr-paketin map()-funktioilla.
+Jotta saan käsityön minimoitua, lataan taulukot suoraan R:llä katsomatta nettisivua lainkaan. Lunttaan tosin käsipelillä kiinnostavan taulun nimen ja sarakkeiden sisällön.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
         <meta name="generator" content="Hugo 0.49.2" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="og:title" content="Kuinka analysoin useaa excel-taulukkoa kerralla R:llä">
-<meta property="og:description" content="Analysoin alkukuusta Liikenneviraston henkilöliikennetutkimuksen tulostaulukoista. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille ja maakunnalle. Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa raporteissa, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n purrr-paketin map()-funktioilla.
-Jotta saan käsityön minimoitua, lataan taulukot suoraan R:llä katsomatta nettisivua lainkaan. Lunttaan tosin käsipelillä kiinnostavan taulun nimen ja sarakkeiden sisällön.
-library(tidyverse)library(rvest)# tekstinkäsittelyfunktiottekstit &lt;- function(x) {x &lt;- gsub(&quot;_tulokset&quot;, &quot;&quot;, x)x &lt;- gsub(&quot;_&quot;, &quot; &quot;, x)x &lt;- gsub(&quot;ät Hä&quot;, &quot;ät-Hä&quot;, x) # Päijät-Häme special}isoksi &lt;- function(x) {y &lt;- str_sub(x, 1, 1)paste0(toupper(y), str_sub(x, 2, nchar(x)))}# sama linkki kuin ylempänä tekstissätulossivu &lt;- read_html(&quot;https://www.">
+<meta property="og:description" content="Analysoin alkukuusta Liikenneviraston henkilöliikennetutkimuksen tulostaulukoista kulkutapoja kaupunki–maaseutu-alueittain. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille (Salo) ja maakunnalle (Päijät-Häme). Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa raporteissa, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n purrr-paketin map()-funktioilla.
+Jotta saan käsityön minimoitua, lataan taulukot suoraan R:llä katsomatta nettisivua lainkaan. Lunttaan tosin käsipelillä kiinnostavan taulun nimen ja sarakkeiden sisällön.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="/2018/10/18/2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-ll%C3%A4/">
         <link rel="stylesheet" href="/dist/styles.css">
@@ -113,7 +111,7 @@ if (!doNotTrack) {
         <div class="post-content clearfix" itemprop="articleBody">
     
 
-    <p>Analysoin <a href="https://haapakorva.fi/2018/10/05/2018-10-05-oulun-kaupunkialueella-joka-nelj%C3%A4s-matka-tehd%C3%A4%C3%A4n-polkupy%C3%B6r%C3%A4ll%C3%A4/">alkukuusta</a> Liikenneviraston henkilöliikennetutkimuksen <a href="https://www.liikennevirasto.fi/tilastot/henkiloliikennetutkimus/tuloksia-taulukoina#.W8imDmgzavs">tulostaulukoista</a>. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille ja maakunnalle. Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa <a href="https://www.liikennevirasto.fi/documents/20473/434710/Seutujulkaisu_HLT2016_Oulun_seutu.pdf/02c88fbd-a9fb-4905-a637-f72a3cd47f5d">raporteissa</a>, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n <code>purrr</code>-paketin <code>map()</code>-funktioilla.</p>
+    <p>Analysoin <a href="https://haapakorva.fi/2018/10/05/2018-10-05-oulun-kaupunkialueella-joka-nelj%C3%A4s-matka-tehd%C3%A4%C3%A4n-polkupy%C3%B6r%C3%A4ll%C3%A4/">alkukuusta</a> Liikenneviraston henkilöliikennetutkimuksen <a href="https://www.liikennevirasto.fi/tilastot/henkiloliikennetutkimus/tuloksia-taulukoina#.W8imDmgzavs">tulostaulukoista</a> kulkutapoja kaupunki–maaseutu-alueittain. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille (Salo) ja maakunnalle (Päijät-Häme). Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa <a href="https://www.liikennevirasto.fi/documents/20473/434710/Seutujulkaisu_HLT2016_Oulun_seutu.pdf/02c88fbd-a9fb-4905-a637-f72a3cd47f5d">raporteissa</a>, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n <code>purrr</code>-paketin <code>map()</code>-funktioilla.</p>
 <p>Jotta saan käsityön minimoitua, lataan taulukot suoraan R:llä katsomatta nettisivua lainkaan. Lunttaan tosin käsipelillä kiinnostavan taulun nimen ja sarakkeiden sisällön.</p>
 <pre class="r"><code>library(tidyverse)
 library(rvest)
@@ -212,7 +210,7 @@ data_kuva &lt;- data_all %&gt;%
 <p>Ja piirretään kuva.</p>
 <pre class="r"><code>data_kuva %&gt;% 
    ggplot(aes(tarkoitus %&gt;% fct_rev(), p_tar, fill = kt %&gt;% fct_rev())) +
-   facet_wrap(~ name, ncol = 3) +
+   facet_wrap(~ name, ncol = 2) +
    geom_col() +
    coord_flip() +
    geom_hline(yintercept = c(0.25, 0.5, 0.75), lty = 3, color = &quot;gray50&quot;) +

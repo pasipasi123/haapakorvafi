@@ -18,9 +18,8 @@
       <pubDate>Thu, 18 Oct 2018 00:00:00 +0000</pubDate>
       
       <guid>/2018/10/18/2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-ll%C3%A4/</guid>
-      <description>Analysoin alkukuusta Liikenneviraston henkilöliikennetutkimuksen tulostaulukoista. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille ja maakunnalle. Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa raporteissa, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n purrr-paketin map()-funktioilla.
-Jotta saan käsityön minimoitua, lataan taulukot suoraan R:llä katsomatta nettisivua lainkaan. Lunttaan tosin käsipelillä kiinnostavan taulun nimen ja sarakkeiden sisällön.
-library(tidyverse)library(rvest)# tekstinkäsittelyfunktiottekstit &amp;lt;- function(x) {x &amp;lt;- gsub(&amp;quot;_tulokset&amp;quot;, &amp;quot;&amp;quot;, x)x &amp;lt;- gsub(&amp;quot;_&amp;quot;, &amp;quot; &amp;quot;, x)x &amp;lt;- gsub(&amp;quot;ät Hä&amp;quot;, &amp;quot;ät-Hä&amp;quot;, x) # Päijät-Häme special}isoksi &amp;lt;- function(x) {y &amp;lt;- str_sub(x, 1, 1)paste0(toupper(y), str_sub(x, 2, nchar(x)))}# sama linkki kuin ylempänä tekstissätulossivu &amp;lt;- read_html(&amp;quot;https://www.</description>
+      <description>Analysoin alkukuusta Liikenneviraston henkilöliikennetutkimuksen tulostaulukoista kulkutapoja kaupunki–maaseutu-alueittain. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille (Salo) ja maakunnalle (Päijät-Häme). Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa raporteissa, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n purrr-paketin map()-funktioilla.
+Jotta saan käsityön minimoitua, lataan taulukot suoraan R:llä katsomatta nettisivua lainkaan. Lunttaan tosin käsipelillä kiinnostavan taulun nimen ja sarakkeiden sisällön.</description>
     </item>
     
     <item>
