@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Pasi Haapakorva</copyright>
-    <lastBuildDate>Fri, 05 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Oct 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/avoin-data/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Paikkatietoaineistojen lataaminen rajapinnalta R:llä</title>
+      <link>/2018/10/25/2018-10-25-paikkatietoaineistojen-lataaminen-rajapinnalta-r-ll%C3%A4/</link>
+      <pubDate>Thu, 25 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/10/25/2018-10-25-paikkatietoaineistojen-lataaminen-rajapinnalta-r-ll%C3%A4/</guid>
+      <description>Huomasin analysoidessani Oulun postinumeroalueita, että R:llä useiden eri shapefilejen lataaminen WFS-rajapinnalta käy aivan leikiten. Kun äskettäin opin myös hyödyntämään yhä paremmin stringr-paketin työkaluja kuten str_split() (stringin paloittelu) ja str_subset (string-vektorin suodatus), hiirityöskentelyn määrä lähentelee nollaa.
+Ladataan Tilastokeskuksen rajapinnalta kaikki postinumero-shapefilet. R-paketin gdalUtils käyttö edellyttää, että gdal on asennettuna, mutta riittää myös, että koneelle on asennettu ilmainen ja avoin QGIS.
+gdalUtils::ogrinfo() antaa vektorina rajapinnan tiedot, jotka eivät sellaisenaan käy rajapintahauiksi, joten käsittelen niitä hieman.</description>
+    </item>
     
     <item>
       <title>Oulun kaupunkialueella joka neljäs matka tehdään polkupyörällä</title>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Paikkatietoaineistojen lataaminen rajapinnalta R:llä &middot; Pasi Haapakorva</title>
+        <meta name="description" content="Huomasin analysoidessani Oulun postinumeroalueita, että R:llä useiden eri shapefilejen lataaminen WFS-rajapinnalta käy aivan leikiten. Kun äskettäin opin myös hyödyntämään yhä paremmin stringr-paketin työkaluja kuten str_split() (stringin paloittelu) ja str_subset (string-vektorin suodatus), hiirityöskentelyn määrä lähentelee nollaa.
+Ladataan Tilastokeskuksen rajapinnalta kaikki postinumero-shapefilet. R-paketin gdalUtils käyttö edellyttää, että gdal on asennettuna, mutta riittää myös, että koneelle on asennettu ilmainen ja avoin QGIS.
+gdalUtils::ogrinfo() antaa vektorina rajapinnan tiedot, jotka eivät sellaisenaan käy rajapintahauiksi, joten käsittelen niitä hieman.">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.49.2" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="Paikkatietoaineistojen lataaminen rajapinnalta R:llä">
+<meta property="og:description" content="Huomasin analysoidessani Oulun postinumeroalueita, että R:llä useiden eri shapefilejen lataaminen WFS-rajapinnalta käy aivan leikiten. Kun äskettäin opin myös hyödyntämään yhä paremmin stringr-paketin työkaluja kuten str_split() (stringin paloittelu) ja str_subset (string-vektorin suodatus), hiirityöskentelyn määrä lähentelee nollaa.
+Ladataan Tilastokeskuksen rajapinnalta kaikki postinumero-shapefilet. R-paketin gdalUtils käyttö edellyttää, että gdal on asennettuna, mutta riittää myös, että koneelle on asennettu ilmainen ja avoin QGIS.
+gdalUtils::ogrinfo() antaa vektorina rajapinnan tiedot, jotka eivät sellaisenaan käy rajapintahauiksi, joten käsittelen niitä hieman.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="/2018/10/25/2018-10-25-paikkatietoaineistojen-lataaminen-rajapinnalta-r-ll%C3%A4/">
+        <link rel="stylesheet" href="/dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+        
+        
+    </head>
+    <body>
+        
+<script type="application/javascript">
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'XXX', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <h1 class="site-title">
+                                <a title="Pasi Haapakorva" href="/">Pasi Haapakorva</a>
+                            </h1>
+                        
+                        <a class="button-square" href="/index.xml"><i class="fa fa-rss"></i></a>
+                        
+                            <a class="button-square button-social hint--top" data-hint="Twitter" title="Twitter" href="https://twitter.com/pasi_pasi">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Github" title="Github" href="https://github.com/pasipasi123/">
+                                <i class="fa fa-github-alt"></i>
+                            </a>
+                        
+                        
+                        
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Email" title="Email" href="mailto:pasi.haapakorva[a]gmail.com">
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="Blog" href="/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Pasi" href="/page/pasi/">Pasi</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Kivisydänprojekti" href="/page/kivisyd%C3%A4nprojekti/">Kivisydänprojekti</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Paikkatietoaineistojen lataaminen rajapinnalta R:llä</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2018-10-25" itemprop="datePublished">Thu, Oct 25, 2018</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="https://google.com/&#43;XXX" itemprop="url" rel="author">Pasi Haapakorva</a>
+            </span>
+        </span>
+    </p>
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    <p>Huomasin analysoidessani Oulun <a href="https://twitter.com/pasi_pasi/status/1054397744440324096">postinumeroalueita</a>, että R:llä useiden eri shapefilejen lataaminen WFS-rajapinnalta käy aivan leikiten. Kun äskettäin opin myös <a href="https://haapakorva.fi/2018/10/18/2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-ll%C3%A4/">hyödyntämään</a> yhä paremmin <code>stringr</code>-paketin työkaluja kuten <code>str_split()</code> (stringin paloittelu) ja <code>str_subset</code> (string-vektorin suodatus), hiirityöskentelyn määrä lähentelee nollaa.</p>
+<p>Ladataan Tilastokeskuksen rajapinnalta kaikki postinumero-shapefilet. R-paketin <code>gdalUtils</code> käyttö edellyttää, että <a href="https://www.gdal.org/">gdal</a> on asennettuna, mutta riittää myös, että koneelle on asennettu ilmainen ja avoin <a href="https://qgis.org/en/site/">QGIS</a>.</p>
+<p><code>gdalUtils::ogrinfo()</code> antaa vektorina rajapinnan tiedot, jotka eivät sellaisenaan käy rajapintahauiksi, joten käsittelen niitä hieman. Saan tuloksena neljä karttatason nimeä.</p>
+<pre class="r"><code>library(tidyverse) # kaikki olennaiset paketit kerralla
+
+rajapinta &lt;- &quot;WFS:http://geo.stat.fi/geoserver/postialue/wfs&quot;
+
+haku &lt;- gdalUtils::ogrinfo(rajapinta)
+
+wfs_haut &lt;- haku %&gt;% 
+  str_subset(&quot;pno_tilasto_&quot;) %&gt;% 
+  str_split(&quot; &quot;) %&gt;% 
+  unlist() %&gt;% 
+  str_subset(&quot;pno&quot;)
+
+wfs_haut
+#&gt; [1] &quot;postialue:pno_tilasto_2015&quot; &quot;postialue:pno_tilasto_2016&quot;
+#&gt; [3] &quot;postialue:pno_tilasto_2017&quot; &quot;postialue:pno_tilasto_2018&quot;</code></pre>
+<p>Seuraavassa kääräisen edellisen vektorin <code>tibble</code>:ksi <code>enframe()</code>-funktiolla ja muokkaan tauluun ensimmäiseen sarakkeeseen siistit nimet ladattaville tiedostoille.</p>
+<pre class="r"><code>wfs_haut_df &lt;- wfs_haut %&gt;% 
+  enframe() %&gt;% 
+  mutate(name = str_sub(value, 11, nchar(value)))
+
+wfs_haut_df
+#&gt; # A tibble: 4 x 2
+#&gt;   name             value                     
+#&gt;   &lt;chr&gt;            &lt;chr&gt;                     
+#&gt; 1 pno_tilasto_2015 postialue:pno_tilasto_2015
+#&gt; 2 pno_tilasto_2016 postialue:pno_tilasto_2016
+#&gt; 3 pno_tilasto_2017 postialue:pno_tilasto_2017
+#&gt; 4 pno_tilasto_2018 postialue:pno_tilasto_2018</code></pre>
+<p>Tietäen sarakkeiden sisällön ja järjestyksen, voin käyttää juuri tällaisiin tilanteisiin sopivaa <code>purrr</code>-paketin <code>pwalk()</code>-funktiota, joka ei muuta funktiolle annettavaa tietoa tai tietoja mitenkään, mutta hyödyntää sille annettavan funktion sivuvaikutuksen, joka tässä tapauksessa on tiedoston kirjoittaminen. Annan <code>pwalk()</code>:lle funktion formula-muodossa niin, että <code>..1</code> ja <code>..2</code> osoittavat sarakkeiden sijainnit. <code>ogr2ogr()</code>-funktion ensimmäinen argumentti on rajapinnan osoite, joka on minulla tallennettu <code>rajapinta</code>-objektissa. Toinen argumentti on kohdetiedostopolku, jonka rakennan palasista. Kolmas argumentti on karttatason nimi, joka on tallennettu toiseen sarakkeeseen.</p>
+<pre class="r"><code># dir.create(&quot;data/pno/&quot;, recursive = TRUE) # hakemiston luonti
+
+wfs_haut_df %&gt;% 
+  pwalk(~ gdalUtils::ogr2ogr(rajapinta, paste0(&quot;data/pno/&quot;, ..1, &quot;.shp&quot;), ..2))</code></pre>
+<p>Nyt minulla on paikalliselle levylle tallennettuna neljä shapefileä.</p>
+<pre class="r"><code>list.files(&quot;data/pno&quot;) %&gt;% str_subset(&quot;\\.shp$&quot;)
+#&gt; [1] &quot;pno_tilasto_2015.shp&quot; &quot;pno_tilasto_2016.shp&quot; &quot;pno_tilasto_2017.shp&quot; &quot;pno_tilasto_2018.shp&quot;</code></pre>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="/tags/avoin-data/">avoin data</a>, 
+            
+                <a href="/tags/gis/">GIS</a>, 
+            
+                <a href="/tags/r/">r</a>
+            
+        </p>
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=Paikkatietoaineistojen%20lataaminen%20rajapinnalta%20R%3all%c3%a4&url=%2f2018%2f10%2f25%2f2018-10-25-paikkatietoaineistojen-lataaminen-rajapinnalta-r-ll%25C3%25A4%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2018%2f10%2f25%2f2018-10-25-paikkatietoaineistojen-lataaminen-rajapinnalta-r-ll%25C3%25A4%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+        
+    </div>
+</footer>
+
+        
+    <div class="comments">
+        
+    </div>
+
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="Pasi Haapakorva" href="/">Pasi Haapakorva</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2018 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="/js/jquery-1.11.3.min.js"></script>
+        <script src="/js/jquery.fitvids.js"></script>
+        
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        
+        
+        <script src="/js/scripts.js"></script>
+    </body>
+</html>
+

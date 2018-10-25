@@ -1,0 +1,65 @@
+---
+title: Paikkatietoaineistojen lataaminen rajapinnalta R:llä
+author: Pasi Haapakorva
+date: '2018-10-25'
+slug: paikkatietoaineistojen-lataaminen-rajapinnalta-r-llä
+categories: []
+tags:
+  - avoin data
+  - GIS
+  - r
+description: ''
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, eval = FALSE, warning = FALSE)
+```
+Huomasin analysoidessani Oulun [postinumeroalueita](https://twitter.com/pasi_pasi/status/1054397744440324096), että R:llä useiden eri shapefilejen lataaminen WFS-rajapinnalta käy aivan leikiten. Kun äskettäin opin myös [hyödyntämään](https://haapakorva.fi/2018/10/18/2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-ll%C3%A4/) yhä paremmin `stringr`-paketin työkaluja kuten `str_split()` (stringin paloittelu) ja `str_subset` (string-vektorin suodatus), hiirityöskentelyn määrä lähentelee nollaa.
+
+Ladataan Tilastokeskuksen rajapinnalta kaikki postinumero-shapefilet. R-paketin `gdalUtils` käyttö edellyttää, että [gdal](https://www.gdal.org/) on asennettuna, mutta riittää myös, että koneelle on asennettu ilmainen ja avoin [QGIS](https://qgis.org/en/site/).
+
+`gdalUtils::ogrinfo()` antaa vektorina rajapinnan tiedot, jotka eivät sellaisenaan käy rajapintahauiksi, joten käsittelen niitä hieman. Saan tuloksena neljä karttatason nimeä.
+```{r}
+library(tidyverse) # kaikki olennaiset paketit kerralla
+
+rajapinta <- "WFS:http://geo.stat.fi/geoserver/postialue/wfs"
+
+haku <- gdalUtils::ogrinfo(rajapinta)
+
+wfs_haut <- haku %>% 
+  str_subset("pno_tilasto_") %>% 
+  str_split(" ") %>% 
+  unlist() %>% 
+  str_subset("pno")
+
+wfs_haut
+#> [1] "postialue:pno_tilasto_2015" "postialue:pno_tilasto_2016"
+#> [3] "postialue:pno_tilasto_2017" "postialue:pno_tilasto_2018"
+```
+Seuraavassa kääräisen edellisen vektorin `tibble`:ksi `enframe()`-funktiolla ja muokkaan tauluun ensimmäiseen sarakkeeseen siistit nimet ladattaville tiedostoille.
+
+```{r}
+wfs_haut_df <- wfs_haut %>% 
+  enframe() %>% 
+  mutate(name = str_sub(value, 11, nchar(value)))
+
+wfs_haut_df
+#> # A tibble: 4 x 2
+#>   name             value                     
+#>   <chr>            <chr>                     
+#> 1 pno_tilasto_2015 postialue:pno_tilasto_2015
+#> 2 pno_tilasto_2016 postialue:pno_tilasto_2016
+#> 3 pno_tilasto_2017 postialue:pno_tilasto_2017
+#> 4 pno_tilasto_2018 postialue:pno_tilasto_2018
+```
+Tietäen sarakkeiden sisällön ja järjestyksen, voin käyttää juuri tällaisiin tilanteisiin sopivaa `purrr`-paketin `pwalk()`-funktiota, joka ei muuta funktiolle annettavaa tietoa tai tietoja mitenkään, mutta hyödyntää sille annettavan funktion sivuvaikutuksen, joka tässä tapauksessa on tiedoston kirjoittaminen. Annan `pwalk()`:lle funktion formula-muodossa niin, että `..1` ja `..2` osoittavat sarakkeiden sijainnit. `ogr2ogr()`-funktion ensimmäinen argumentti on rajapinnan osoite, joka on minulla tallennettu `rajapinta`-objektissa. Toinen argumentti on kohdetiedostopolku, jonka rakennan palasista. Kolmas argumentti on karttatason nimi, joka on tallennettu toiseen sarakkeeseen.
+```{r}
+# dir.create("data/pno/", recursive = TRUE) # hakemiston luonti
+
+wfs_haut_df %>% 
+  pwalk(~ gdalUtils::ogr2ogr(rajapinta, paste0("data/pno/", ..1, ".shp"), ..2))
+```
+Nyt minulla on paikalliselle levylle tallennettuna neljä shapefileä.
+```{r}
+list.files("data/pno") %>% str_subset("\\.shp$")
+#> [1] "pno_tilasto_2015.shp" "pno_tilasto_2016.shp" "pno_tilasto_2017.shp" "pno_tilasto_2018.shp"
+```
