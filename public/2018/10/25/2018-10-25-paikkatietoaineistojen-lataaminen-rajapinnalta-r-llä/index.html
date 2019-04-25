@@ -9,7 +9,7 @@ Ladataan Tilastokeskuksen rajapinnalta kaikki postinumero-shapefilet. R-paketin 
 gdalUtils::ogrinfo() antaa vektorina rajapinnan tiedot, jotka eivät sellaisenaan käy rajapintahauiksi, joten käsittelen niitä hieman.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
-        <meta name="generator" content="Hugo 0.49.2" />
+        <meta name="generator" content="Hugo 0.55.4" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="og:title" content="Paikkatietoaineistojen lataaminen rajapinnalta R:llä">
@@ -113,7 +113,10 @@ if (!doNotTrack) {
         <div class="post-content clearfix" itemprop="articleBody">
     
 
-    <p>Huomasin analysoidessani Oulun <a href="https://twitter.com/pasi_pasi/status/1054397744440324096">postinumeroalueita</a>, että R:llä useiden eri shapefilejen lataaminen WFS-rajapinnalta käy aivan leikiten. Kun äskettäin opin myös <a href="https://haapakorva.fi/2018/10/18/2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-ll%C3%A4/">hyödyntämään</a> yhä paremmin <code>stringr</code>-paketin työkaluja kuten <code>str_split()</code> (stringin paloittelu) ja <code>str_subset</code> (string-vektorin suodatus), hiirityöskentelyn määrä lähentelee nollaa.</p>
+    
+
+
+<p>Huomasin analysoidessani Oulun <a href="https://twitter.com/pasi_pasi/status/1054397744440324096">postinumeroalueita</a>, että R:llä useiden eri shapefilejen lataaminen WFS-rajapinnalta käy aivan leikiten. Kun äskettäin opin myös <a href="https://haapakorva.fi/2018/10/18/2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-ll%C3%A4/">hyödyntämään</a> yhä paremmin <code>stringr</code>-paketin työkaluja kuten <code>str_split()</code> (stringin paloittelu) ja <code>str_subset</code> (string-vektorin suodatus), hiirityöskentelyn määrä lähentelee nollaa.</p>
 <p>Ladataan Tilastokeskuksen rajapinnalta kaikki postinumero-shapefilet. R-paketin <code>gdalUtils</code> käyttö edellyttää, että <a href="https://www.gdal.org/">gdal</a> on asennettuna, mutta riittää myös, että koneelle on asennettu ilmainen ja avoin <a href="https://qgis.org/en/site/">QGIS</a>.</p>
 <p><code>gdalUtils::ogrinfo()</code> antaa vektorina rajapinnan tiedot, jotka eivät sellaisenaan käy rajapintahauiksi, joten käsittelen niitä hieman. Saan tuloksena neljä karttatason nimeä.</p>
 <pre class="r"><code>library(tidyverse) # kaikki olennaiset paketit kerralla
@@ -215,7 +218,7 @@ wfs_haut_df %&gt;%
                 </div>
 
                 <p class="footer-copyright">
-                    <span>&copy; 2018 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                    <span>&copy; 2019 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
                 </p>
                 <p class="footer-copyright">
                     <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>

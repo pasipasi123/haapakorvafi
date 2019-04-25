@@ -61,7 +61,8 @@ kunnat &lt;- read_sf(&quot;kunnat.shp&quot;)
        subtitle = &quot;Jokainen oululainen pisteenä&quot;)
 
 #ggsave(&quot;oulu.png&quot;, h = 10, w = 8.5)</code></pre>
-<p><img src="/img/oulu.png" /> Oulu on paisunut vuosien 2009 ja 2013 kuntaliitosten myötä valtavan suureksi. Tuntuisi, että kuvasta hahmottuvat tilastoruudut eivät ole kilometri kanttiinsa vaan pienempiä, mutta Oulun valtava noin sadan kilometrin pituus aiheuttaa näköharhan.</p>
+<p><img src="/img/oulu.png" />
+Oulu on paisunut vuosien 2009 ja 2013 kuntaliitosten myötä valtavan suureksi. Tuntuisi, että kuvasta hahmottuvat tilastoruudut eivät ole kilometri kanttiinsa vaan pienempiä, mutta Oulun valtava noin sadan kilometrin pituus aiheuttaa näköharhan.</p>
 <p>Valtaosa Oulun pinta-alasta on asumatonta. Usein kuulee puhuttavan, että Oulussa on pakko päästä liikkumaan autolla, mutta väestöstä taitaa vain pieni osa asua sellaisissa paikoissa, mistä todella ei muulla välineellä pääse käymään keskustassa.</p>
 <p>Nyt kun menetelmä on otettu haltuun, voin piirtää saman kuvan koko Suomesta. Tehdään ensin Suomen kartta yhdistämällä maakunnat toisiinsa, koska mistään ei äkkiä löytynyt koko Suomea.</p>
 <pre class="r"><code># ogr2ogr(&quot;WFS:http://geo.stat.fi/geoserver/tilastointialueet/wfs&quot;, &quot;maakunnat.shp&quot;, &quot;maakunta1000k_2018&quot;)
@@ -97,7 +98,4 @@ p1 &lt;- ggplot(suomi) +
        subtitle = &quot;Jokainen suomalainen pisteenä&quot;)
 
 ggsave(&quot;suomi.png&quot;, h = 20, w = 11)</code></pre>
-<div class="figure">
-<img src="/img/suomi.png" />
-
-</div>
+<p><img src="/img/suomi.png" /></p>

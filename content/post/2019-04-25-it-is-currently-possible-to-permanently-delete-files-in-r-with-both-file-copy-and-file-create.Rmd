@@ -1,0 +1,64 @@
+---
+title: It is currently possible to permanently delete files in R with both file.copy()
+  and file.create()
+author: Pasi Haapakorva
+date: '2019-04-25'
+categories:
+  - R
+tags:
+  - r
+slug: it-is-currently-possible-to-permanently-delete-files-in-r-with-both-file-copy-and-file-create
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, eval = FALSE, warning = FALSE)
+```
+After an incident at work that involved deleting an entire project I discovered a dangerous bug (or feature)  in base R functions `file.copy()` and `file.create()`.
+
+Let's first create a directory and a file inside it.
+
+```{r}
+dir.create("foo")
+cat(file = "foo/bar", "baz\n")
+readLines("foo/bar")
+#> [1] "baz"
+```
+We'll then permanently delete the file contents.
+```{r}
+file.copy("foo", ".", recursive = TRUE)
+#> [1] TRUE
+readLines("foo/bar")
+#> character(0)
+```
+```{r echo=FALSE}
+unlink("foo")
+```
+What happens?
+
+Looking at `file.copy()` code, we can see that `from` and `to` are checked in an `if` statement `if (recursive && to %in% from)`, but because `"foo"` is not `"."`, the statement is not triggered. If it had been, the function would have stopped `stop("attempt to copy a directory to itself")`.
+
+It looks like (there's a call to C code) `file.copy()` then goes on to read the files in `from` and `file.create()` them in `to` directory. `file.create()` has another interesting property: it doesn't check if the file already exists. It goes on to create the file, which already exists, and removes all its contents.
+
+## A fix
+
+Obviously, `from` needs to be checked if it's the same as `to` and in the current if statement this is attempted. However it only checks if these two strings are exactly the same, but copying a directory to its own parent directory doesn't trigger the condition. We need to check if `to` is in the parent directory of `from`.
+
+```{r}
+if (recursive && (to %in% from || 
+      normalizePath(dirname(normalizePath(from))) == normalizePath(to)))
+```
+Here `normalizePath()` is used because it, according to its help file, "Convert[s] file paths to canonical form for the platform, to display them in a user-understandable form and so that _relative and absolute paths can be compared._" `dirname()` outputs different path form so both input and output of `dirname()` needs to put through `normalizePath()`.
+
+Another option would be to see if `from %in% list.files(to)` but I think this could be slow if `to` is a large directory.
+
+If we use the if statement with `normalizePath()` in an otherwise identical function called `file.copy2()`, we can't copy the directory to itself.
+
+```{r}
+file.copy2("foo", ".", recursive = TRUE)
+#> Error in file.copy2("foo", ".", recursive = TRUE): attempt to copy a directory to itself
+```
+
+
+
+
+
+

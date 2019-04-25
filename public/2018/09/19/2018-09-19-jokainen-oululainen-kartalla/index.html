@@ -10,7 +10,7 @@ Ensin haetaan dataa:
 library(tidyverse)library(sf)library(magrittr) # %$%-operaattori# library(gdalUtils)# # ogr2ogr(&quot;WFS:http://geo.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
-        <meta name="generator" content="Hugo 0.49.2" />
+        <meta name="generator" content="Hugo 0.55.4" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="og:title" content="Jokainen oululainen kartalla">
@@ -115,7 +115,10 @@ if (!doNotTrack) {
         <div class="post-content clearfix" itemprop="articleBody">
     
 
-    <p>Kun näin <a href="http://naytadata.com/">Näytä data</a>n piirtäneen jokaisen suomalaisen <a href="https://www.reddit.com/r/dataisbeautiful/comments/9guknx/the_finnish_population_as_dots_on_a_map_oc/">kartalle</a> (inspiroituneena <a href="https://www.reddit.com/r/dataisbeautiful/comments/9fr3jt/where_the_dutch_live_a_dot_for_every_inhabitant/">tästä</a> ja <a href="http://www.maartenlambrechts.com/2018/02/13/one-person-one-dot-maps-and-how-to-make-them.html">tästä</a>) käyttäen avoimia kotimaisia <a href="http://www.stat.fi/org/avoindata/paikkatietoaineistot/kuntapohjaiset_tilastointialueet.html">paikkatietoaineistoja</a> ja ilmaista paikkatieto-ohjelmistoa <a href="https://www.qgis.org/en/site/">QGIS</a>:iä, halusin kokeilla onnistuisiko minulta ohjelmoida vastaava kuva <a href="https://www.r-project.org/">R</a>:llä.</p>
+    
+
+
+<p>Kun näin <a href="http://naytadata.com/">Näytä data</a>n piirtäneen jokaisen suomalaisen <a href="https://www.reddit.com/r/dataisbeautiful/comments/9guknx/the_finnish_population_as_dots_on_a_map_oc/">kartalle</a> (inspiroituneena <a href="https://www.reddit.com/r/dataisbeautiful/comments/9fr3jt/where_the_dutch_live_a_dot_for_every_inhabitant/">tästä</a> ja <a href="http://www.maartenlambrechts.com/2018/02/13/one-person-one-dot-maps-and-how-to-make-them.html">tästä</a>) käyttäen avoimia kotimaisia <a href="http://www.stat.fi/org/avoindata/paikkatietoaineistot/kuntapohjaiset_tilastointialueet.html">paikkatietoaineistoja</a> ja ilmaista paikkatieto-ohjelmistoa <a href="https://www.qgis.org/en/site/">QGIS</a>:iä, halusin kokeilla onnistuisiko minulta ohjelmoida vastaava kuva <a href="https://www.r-project.org/">R</a>:llä.</p>
 <p>Viime vuosina R on kehittynyt voimakkaasti. <a href="https://www.tidyverse.org/">Tidyverse</a>n ympärille on kertynyt kokonainen uusi koulukunta R-ohjelmoijia. Tidyversen paketit kuten <code>dplyr</code> ja <code>purrr</code> helpottavat ja nopeuttavat datan käsittelyä. Samaan aikaan myös paikkatietoaineistojen käsittelyyn on kehittynyt uusia työkaluja, kuten <a href="https://github.com/r-spatial/sf"><code>sf</code></a>-paketti.</p>
 <p>Ensin haetaan dataa:</p>
 <pre class="r"><code>library(tidyverse)
@@ -163,7 +166,8 @@ kunnat &lt;- read_sf(&quot;kunnat.shp&quot;)
        subtitle = &quot;Jokainen oululainen pisteenä&quot;)
 
 #ggsave(&quot;oulu.png&quot;, h = 10, w = 8.5)</code></pre>
-<p><img src="/img/oulu.png" /> Oulu on paisunut vuosien 2009 ja 2013 kuntaliitosten myötä valtavan suureksi. Tuntuisi, että kuvasta hahmottuvat tilastoruudut eivät ole kilometri kanttiinsa vaan pienempiä, mutta Oulun valtava noin sadan kilometrin pituus aiheuttaa näköharhan.</p>
+<p><img src="/img/oulu.png" />
+Oulu on paisunut vuosien 2009 ja 2013 kuntaliitosten myötä valtavan suureksi. Tuntuisi, että kuvasta hahmottuvat tilastoruudut eivät ole kilometri kanttiinsa vaan pienempiä, mutta Oulun valtava noin sadan kilometrin pituus aiheuttaa näköharhan.</p>
 <p>Valtaosa Oulun pinta-alasta on asumatonta. Usein kuulee puhuttavan, että Oulussa on pakko päästä liikkumaan autolla, mutta väestöstä taitaa vain pieni osa asua sellaisissa paikoissa, mistä todella ei muulla välineellä pääse käymään keskustassa.</p>
 <p>Nyt kun menetelmä on otettu haltuun, voin piirtää saman kuvan koko Suomesta. Tehdään ensin Suomen kartta yhdistämällä maakunnat toisiinsa, koska mistään ei äkkiä löytynyt koko Suomea.</p>
 <pre class="r"><code># ogr2ogr(&quot;WFS:http://geo.stat.fi/geoserver/tilastointialueet/wfs&quot;, &quot;maakunnat.shp&quot;, &quot;maakunta1000k_2018&quot;)
@@ -199,10 +203,7 @@ p1 &lt;- ggplot(suomi) +
        subtitle = &quot;Jokainen suomalainen pisteenä&quot;)
 
 ggsave(&quot;suomi.png&quot;, h = 20, w = 11)</code></pre>
-<div class="figure">
-<img src="/img/suomi.png" />
-
-</div>
+<p><img src="/img/suomi.png" /></p>
 
 </div>
 
@@ -264,7 +265,7 @@ ggsave(&quot;suomi.png&quot;, h = 20, w = 11)</code></pre>
                 </div>
 
                 <p class="footer-copyright">
-                    <span>&copy; 2018 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                    <span>&copy; 2019 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
                 </p>
                 <p class="footer-copyright">
                     <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>

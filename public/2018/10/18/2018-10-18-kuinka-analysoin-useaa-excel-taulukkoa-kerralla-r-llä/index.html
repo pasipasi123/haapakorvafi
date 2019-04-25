@@ -8,7 +8,7 @@
 Jotta saan käsityön minimoitua, lataan taulukot suoraan R:llä katsomatta nettisivua lainkaan. Lunttaan tosin käsipelillä kiinnostavan taulun nimen ja sarakkeiden sisällön.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
-        <meta name="generator" content="Hugo 0.49.2" />
+        <meta name="generator" content="Hugo 0.55.4" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="og:title" content="Kuinka analysoin useaa excel-taulukkoa kerralla R:llä">
@@ -111,7 +111,10 @@ if (!doNotTrack) {
         <div class="post-content clearfix" itemprop="articleBody">
     
 
-    <p>Analysoin <a href="https://haapakorva.fi/2018/10/05/2018-10-05-oulun-kaupunkialueella-joka-nelj%C3%A4s-matka-tehd%C3%A4%C3%A4n-polkupy%C3%B6r%C3%A4ll%C3%A4/">alkukuusta</a> Liikenneviraston henkilöliikennetutkimuksen <a href="https://www.liikennevirasto.fi/tilastot/henkiloliikennetutkimus/tuloksia-taulukoina#.W8imDmgzavs">tulostaulukoista</a> kulkutapoja kaupunki–maaseutu-alueittain. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille (Salo) ja maakunnalle (Päijät-Häme). Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa <a href="https://www.liikennevirasto.fi/documents/20473/434710/Seutujulkaisu_HLT2016_Oulun_seutu.pdf/02c88fbd-a9fb-4905-a637-f72a3cd47f5d">raporteissa</a>, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n <code>purrr</code>-paketin <code>map()</code>-funktioilla.</p>
+    
+
+
+<p>Analysoin <a href="https://haapakorva.fi/2018/10/05/2018-10-05-oulun-kaupunkialueella-joka-nelj%C3%A4s-matka-tehd%C3%A4%C3%A4n-polkupy%C3%B6r%C3%A4ll%C3%A4/">alkukuusta</a> Liikenneviraston henkilöliikennetutkimuksen <a href="https://www.liikennevirasto.fi/tilastot/henkiloliikennetutkimus/tuloksia-taulukoina#.W8imDmgzavs">tulostaulukoista</a> kulkutapoja kaupunki–maaseutu-alueittain. Tutkimuksessa on tehty lisäotoksia niistä maksaneille kaupunkiseuduille, kaupungille (Salo) ja maakunnalle (Päijät-Häme). Aluekohtaisia tuloksia on virallisesti julkaistu aluekohtaisissa <a href="https://www.liikennevirasto.fi/documents/20473/434710/Seutujulkaisu_HLT2016_Oulun_seutu.pdf/02c88fbd-a9fb-4905-a637-f72a3cd47f5d">raporteissa</a>, mutta lisäotosten tietoja ei voi raporteista helposti verrata keskenään. On kuitenkin helppo lukea kaikki excelit samalla kertaa sisään ja ajaa niihin vuoronperään koodia R:n <code>purrr</code>-paketin <code>map()</code>-funktioilla.</p>
 <p>Jotta saan käsityön minimoitua, lataan taulukot suoraan R:llä katsomatta nettisivua lainkaan. Lunttaan tosin käsipelillä kiinnostavan taulun nimen ja sarakkeiden sisällön.</p>
 <pre class="r"><code>library(tidyverse)
 library(rvest)
@@ -223,10 +226,7 @@ data_kuva &lt;- data_all %&gt;%
    theme_minimal() +
    theme(legend.position = &quot;top&quot;) +
    labs(x = NULL, y = NULL)</code></pre>
-<div class="figure">
-<img src="/content/post/2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-llä_files/tarkoitus_kt_blogi.png" />
-
-</div>
+<p><img src="/content/post/2018-10-18-kuinka-analysoin-useaa-excel-taulukkoa-kerralla-r-llä_files/tarkoitus_kt_blogi.png" /></p>
 
 </div>
 
@@ -286,7 +286,7 @@ data_kuva &lt;- data_all %&gt;%
                 </div>
 
                 <p class="footer-copyright">
-                    <span>&copy; 2018 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                    <span>&copy; 2019 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
                 </p>
                 <p class="footer-copyright">
                     <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>

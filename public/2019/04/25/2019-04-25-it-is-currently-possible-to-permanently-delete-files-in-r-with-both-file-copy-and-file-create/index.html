@@ -3,19 +3,25 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Kivisydämen vuosi &middot; Pasi Haapakorva</title>
-        <meta name="description" content="Olen mitannut Kivisydämen ja useiden muiden pysäköintitalojen käyttöä ohjelmallani jo yli vuoden ajan. Hallin laajentamisen puolesta otetaan joka vuosi kantaa, vaikka julkisesti ei ole tiedossa, kuinka paljon hallia käytetään. Kivisydän on ollut puolenkymmentä kertaa täynnä päivinä, jolloin keskustassa on ollut samaan aikaan useita tapahtumia tai kun käynnissä on ollut kovimmat jouluostosruuhkat. Kiinnostavampaa on kuitenkin katsoa, paljonko hallia käytetään ihan tavallisena arkena.
-Kivisydämessä on 900 pysäköintiruutua. Kaikki 900 paikkaa eivät kuitenkaan oikeastaan koskaan ole vapaasti käytettävissä keskustassa asiointiin.">
+        <title>It is currently possible to permanently delete files in R with both file.copy() and file.create() &middot; Pasi Haapakorva</title>
+        <meta name="description" content="After an incident at work that involved deleting an entire project I discovered a dangerous bug (or feature) in base R functions file.copy() and file.create().
+Let’s first create a directory and a file inside it.
+dir.create(&quot;foo&quot;)cat(file = &quot;foo/bar&quot;, &quot;baz\n&quot;)readLines(&quot;foo/bar&quot;)#&gt; [1] &quot;baz&quot;We’ll then permanently delete the file contents.
+file.copy(&quot;foo&quot;, &quot;.&quot;, recursive = TRUE)#&gt; [1] TRUEreadLines(&quot;foo/bar&quot;)#&gt; character(0)What happens?
+Looking at file.copy() code, we can see that from and to are checked in an if statement if (recursive &amp;&amp; to %in% from), but because &#34;">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
         <meta name="generator" content="Hugo 0.55.4" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta property="og:title" content="Kivisydämen vuosi">
-<meta property="og:description" content="Olen mitannut Kivisydämen ja useiden muiden pysäköintitalojen käyttöä ohjelmallani jo yli vuoden ajan. Hallin laajentamisen puolesta otetaan joka vuosi kantaa, vaikka julkisesti ei ole tiedossa, kuinka paljon hallia käytetään. Kivisydän on ollut puolenkymmentä kertaa täynnä päivinä, jolloin keskustassa on ollut samaan aikaan useita tapahtumia tai kun käynnissä on ollut kovimmat jouluostosruuhkat. Kiinnostavampaa on kuitenkin katsoa, paljonko hallia käytetään ihan tavallisena arkena.
-Kivisydämessä on 900 pysäköintiruutua. Kaikki 900 paikkaa eivät kuitenkaan oikeastaan koskaan ole vapaasti käytettävissä keskustassa asiointiin.">
+        <meta property="og:title" content="It is currently possible to permanently delete files in R with both file.copy() and file.create()">
+<meta property="og:description" content="After an incident at work that involved deleting an entire project I discovered a dangerous bug (or feature) in base R functions file.copy() and file.create().
+Let’s first create a directory and a file inside it.
+dir.create(&quot;foo&quot;)cat(file = &quot;foo/bar&quot;, &quot;baz\n&quot;)readLines(&quot;foo/bar&quot;)#&gt; [1] &quot;baz&quot;We’ll then permanently delete the file contents.
+file.copy(&quot;foo&quot;, &quot;.&quot;, recursive = TRUE)#&gt; [1] TRUEreadLines(&quot;foo/bar&quot;)#&gt; character(0)What happens?
+Looking at file.copy() code, we can see that from and to are checked in an if statement if (recursive &amp;&amp; to %in% from), but because &#34;">
 <meta property="og:type" content="article">
-<meta property="og:url" content="/2018/09/22/2018-09-22-kivisyd%C3%A4men-vuosi-osa-1/">
+<meta property="og:url" content="/2019/04/25/2019-04-25-it-is-currently-possible-to-permanently-delete-files-in-r-with-both-file-copy-and-file-create/">
         <link rel="stylesheet" href="/dist/styles.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -95,10 +101,10 @@ if (!doNotTrack) {
 <div class="container">
     <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
         <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Kivisydämen vuosi</h1>
+    <h1 class="post-title" itemprop="name headline">It is currently possible to permanently delete files in R with both file.copy() and file.create()</h1>
     
     <p class="post-date">
-        <span>Published <time datetime="2018-09-22" itemprop="datePublished">Sat, Sep 22, 2018</time></span>
+        <span>Published <time datetime="2019-04-25" itemprop="datePublished">Thu, Apr 25, 2019</time></span>
         <span>by</span>
         <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
             <span itemprop="name">
@@ -114,17 +120,31 @@ if (!doNotTrack) {
     
 
 
-<p>Olen mitannut Kivisydämen ja useiden muiden pysäköintitalojen käyttöä <a href="/page/kivisydänprojekti/">ohjelmallani</a> jo yli vuoden ajan. Hallin laajentamisen puolesta otetaan joka vuosi <a href="https://www.oululehti.fi/uutiset/arinan-johto-toivoo-kivisydamen-laajentamista-6.261.327161.bb8c318d40">kantaa</a>, vaikka julkisesti ei ole tiedossa, kuinka paljon hallia käytetään. Kivisydän on ollut puolenkymmentä kertaa täynnä päivinä, jolloin keskustassa on ollut samaan aikaan useita tapahtumia tai kun käynnissä on ollut kovimmat jouluostosruuhkat. Kiinnostavampaa on kuitenkin katsoa, paljonko hallia käytetään ihan tavallisena arkena.</p>
-<p>Kivisydämessä on 900 pysäköintiruutua. Kaikki 900 paikkaa eivät kuitenkaan oikeastaan koskaan ole vapaasti käytettävissä keskustassa asiointiin. Tarkasteltavan vuoden aikana, heinäkuu 2017 – heinäkuu 2018, hallin 900 paikasta on arkisin varattu kausipaikoiksi noin 150 paikkaa ja viikonloppuisin 50 paikkaa. Toisin sanoen arkipäivänä Kivisydämeen mahtuu enintään noin 750 ja viikonloppuna noin 850 autoa kerrallaan.</p>
-<p>Seuraavassa kuvassa esitän kokonaisen vuoden Kivisydämen käyttöä niin, että jokaista vuoden 52 viikkoa esittää yksi viiva. Olen värittänyt viivan karkean vuodenajan mukaan siten, että huhti–syyskuu merkitään kesäksi ja loka–maaliskuu talveksi.
-<img src="/img/kivisydan_post1_1.png" />
-Kuvasta nähdään, että viivat yltävät muutamia kertoja arkipäivän ja viikonlopun maksimeihin, mutta suurin viivamassa on useiden satojen autojen verran alempana. Käyttö näyttää olevan talvella runsaampaa kuin kesällä.</p>
-<p>Katsotaan seuraavaksi Kivisydämen huipputunnin aikaista vapaiden paikkojen määrää. Lasken jokaisen vuorokauden maksimitunnilta vapaan tilan määrän ja lasken niistä keskiarvon vuodenajan ja viikonpäivän mukaan.
-<img src="/img/kivisydan_post1_2.png" />
-Nyt talven kesää runsaampi käyttö näkyy selvästi. Käyttö viikonpäivän mukaan jakautuu eri tavalla vuodenajan mukaan, sillä talvella käyttö kasvaa selvästi lauantaita kohti, mutta kesällä ero viikonpäivien välillä on pienempi.</p>
-<p>Kesäkautena Kivisydämessä on huipputunnin aikana vuorokaudesta riippumatta keskimäärin noin 400 vapaata pysäköintipaikkaa. Talvikaudella vapaita paikkoja on loppuviikkoa kohti alenevasti niin, että maanantaina paikkoja on keskimäärin huipputunnin aikana vapaana noin 400 ja lauantaina noin 200. Osa talven runsaammasta käytöstä selittynee loppuvuoden kiivaalla shoppailulla. Voi myös olla, että talven pakkasilla lämmin halli kiinnostaa enemmän kuin kesällä. Kesällä myös pyöräillään paljon enemmän kuin talvella.</p>
-<p>Datan perusteella Kivisydämen käyttöä voisi lisätä paljon. Maanpäällisiä paikkoja tulee vähentää kuten on luvattu, jotta kaduille saadaan lisää elämää ja kalliille maanalaiselle pysäköintihallille käyttöä koko investoinnin edestä. Vasta käytön lisäännyttyä kannattaa puhua lisäinvestoinneista Kivisydämeen.</p>
-<p>Jos joku kysymys Kivisydämen käytössä kaihertaa mieltä, otan mielelläni vastaan analyysiehdotuksia. Sivun ylälaidassa on twitter- ja sähköpostiyhteystietoni.</p>
+<p>After an incident at work that involved deleting an entire project I discovered a dangerous bug (or feature) in base R functions <code>file.copy()</code> and <code>file.create()</code>.</p>
+<p>Let’s first create a directory and a file inside it.</p>
+<pre class="r"><code>dir.create(&quot;foo&quot;)
+cat(file = &quot;foo/bar&quot;, &quot;baz\n&quot;)
+readLines(&quot;foo/bar&quot;)
+#&gt; [1] &quot;baz&quot;</code></pre>
+<p>We’ll then permanently delete the file contents.</p>
+<pre class="r"><code>file.copy(&quot;foo&quot;, &quot;.&quot;, recursive = TRUE)
+#&gt; [1] TRUE
+readLines(&quot;foo/bar&quot;)
+#&gt; character(0)</code></pre>
+<p>What happens?</p>
+<p>Looking at <code>file.copy()</code> code, we can see that <code>from</code> and <code>to</code> are checked in an <code>if</code> statement <code>if (recursive &amp;&amp; to %in% from)</code>, but because <code>"foo"</code> is not <code>"."</code>, the statement is not triggered. If it had been, the function would have stopped <code>stop("attempt to copy a directory to itself")</code>.</p>
+<p>It looks like (there’s a call to C code) <code>file.copy()</code> then goes on to read the files in <code>from</code> and <code>file.create()</code> them in <code>to</code> directory. <code>file.create()</code> has another interesting property: it doesn’t check if the file already exists. It goes on to create the file, which already exists, and removes all its contents.</p>
+<div id="a-fix" class="section level2">
+<h2>A fix</h2>
+<p>Obviously, <code>from</code> needs to be checked if it’s the same as <code>to</code> and in the current if statement this is attempted. However it only checks if these two strings are exactly the same, but copying a directory to its own parent directory doesn’t trigger the condition. We need to check if <code>to</code> is in the parent directory of <code>from</code>.</p>
+<pre class="r"><code>if (recursive &amp;&amp; (to %in% from || 
+      normalizePath(dirname(normalizePath(from))) == normalizePath(to)))</code></pre>
+<p>Here <code>normalizePath()</code> is used because it, according to its help file, “Convert[s] file paths to canonical form for the platform, to display them in a user-understandable form and so that <em>relative and absolute paths can be compared.</em>” <code>dirname()</code> outputs different path form so both input and output of <code>dirname()</code> needs to put through <code>normalizePath()</code>.</p>
+<p>Another option would be to see if <code>from %in% list.files(to)</code> but I think this could be slow if <code>to</code> is a large directory.</p>
+<p>If we use the if statement with <code>normalizePath()</code> in an otherwise identical function called <code>file.copy2()</code>, we can’t copy the directory to itself.</p>
+<pre class="r"><code>file.copy2(&quot;foo&quot;, &quot;.&quot;, recursive = TRUE)
+#&gt; Error in file.copy2(&quot;foo&quot;, &quot;.&quot;, recursive = TRUE): attempt to copy a directory to itself</code></pre>
+</div>
 
 </div>
 
@@ -134,18 +154,14 @@ Nyt talven kesää runsaampi käyttö näkyy selvästi. Käyttö viikonpäivän 
             <span>Tagged:</span>
             
             
-                <a href="/tags/avoin-data/">avoin data</a>, 
-            
-                <a href="/tags/liikenne/">liikenne</a>, 
-            
-                <a href="/tags/kivisyd%C3%A4n/">kivisydän</a>
+                <a href="/tags/r/">r</a>
             
         </p>
     
 
     <div class="share">
         
-            <a class="icon-twitter" href="https://twitter.com/share?text=Kivisyd%c3%a4men%20vuosi&url=%2f2018%2f09%2f22%2f2018-09-22-kivisyd%25C3%25A4men-vuosi-osa-1%2f"
+            <a class="icon-twitter" href="https://twitter.com/share?text=It%20is%20currently%20possible%20to%20permanently%20delete%20files%20in%20R%20with%20both%20file.copy%28%29%20and%20file.create%28%29&url=%2f2019%2f04%2f25%2f2019-04-25-it-is-currently-possible-to-permanently-delete-files-in-r-with-both-file-copy-and-file-create%2f"
                 onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                 <i class="fa fa-twitter"></i>
                 <span class="hidden">Twitter</span>
@@ -153,7 +169,7 @@ Nyt talven kesää runsaampi käyttö näkyy selvästi. Käyttö viikonpäivän 
         
 
         
-            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2018%2f09%2f22%2f2018-09-22-kivisyd%25C3%25A4men-vuosi-osa-1%2f"
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2019%2f04%2f25%2f2019-04-25-it-is-currently-possible-to-permanently-delete-files-in-r-with-both-file-copy-and-file-create%2f"
                 onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                 <i class="fa fa-facebook"></i>
                 <span class="hidden">Facebook</span>

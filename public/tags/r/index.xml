@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>R on Pasi Haapakorva</title>
+    <title>r on Pasi Haapakorva</title>
     <link>/tags/r/</link>
-    <description>Recent content in R on Pasi Haapakorva</description>
+    <description>Recent content in r on Pasi Haapakorva</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Pasi Haapakorva</copyright>
-    <lastBuildDate>Thu, 25 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>It is currently possible to permanently delete files in R with both file.copy() and file.create()</title>
+      <link>/2019/04/25/2019-04-25-it-is-currently-possible-to-permanently-delete-files-in-r-with-both-file-copy-and-file-create/</link>
+      <pubDate>Thu, 25 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/2019/04/25/2019-04-25-it-is-currently-possible-to-permanently-delete-files-in-r-with-both-file-copy-and-file-create/</guid>
+      <description>After an incident at work that involved deleting an entire project I discovered a dangerous bug (or feature) in base R functions file.copy() and file.create().
+Let’s first create a directory and a file inside it.
+dir.create(&amp;quot;foo&amp;quot;)cat(file = &amp;quot;foo/bar&amp;quot;, &amp;quot;baz\n&amp;quot;)readLines(&amp;quot;foo/bar&amp;quot;)#&amp;gt; [1] &amp;quot;baz&amp;quot;We’ll then permanently delete the file contents.
+file.copy(&amp;quot;foo&amp;quot;, &amp;quot;.&amp;quot;, recursive = TRUE)#&amp;gt; [1] TRUEreadLines(&amp;quot;foo/bar&amp;quot;)#&amp;gt; character(0)What happens?
+Looking at file.copy() code, we can see that from and to are checked in an if statement if (recursive &amp;amp;&amp;amp; to %in% from), but because &#34;</description>
+    </item>
     
     <item>
       <title>Paikkatietoaineistojen lataaminen rajapinnalta R:llä</title>

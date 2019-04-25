@@ -8,7 +8,7 @@
 Olen syntynyt 1980-luvulla. Muistelen lapsuuteni talvia lumisina ja kylminä. Samalla muistan tältä vuosikymmeneltä talvia, joilloin yhtäjaksoista pakkasjaksoa ei kestänyt kuin muutaman viikon, tai siltä ainakin tuntuu. Olen lähes koko ikäni ajanut kaikki arkimatkani talvisinkin polkupyörällä ja minusta tuntuu, että pyöräily Oulun talvessa on ollut tällä vuosikymmenellä vaikeampaa kuin koskaan ennen. Muutama vuosi sitten aloin käyttää ensimmäistä kertaa pyörässäni nastarenkaita, koska lämpimästä säästä johtuvia liukkaita kelejä oli niin paljon.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
-        <meta name="generator" content="Hugo 0.49.2" />
+        <meta name="generator" content="Hugo 0.55.4" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="og:title" content="Keskilämpötilan muutos kuukausittain Oulussa 1955–2018">
@@ -111,12 +111,16 @@ if (!doNotTrack) {
         <div class="post-content clearfix" itemprop="articleBody">
     
 
-    <p><em>Analyysiä hieman tarkennettu aamulla 27.9.2018.</em></p>
+    
+
+
+<p><em>Analyysiä hieman tarkennettu aamulla 27.9.2018.</em></p>
 <p>Olen syntynyt 1980-luvulla. Muistelen lapsuuteni talvia lumisina ja kylminä. Samalla muistan tältä vuosikymmeneltä talvia, joilloin yhtäjaksoista pakkasjaksoa ei kestänyt kuin muutaman viikon, tai siltä ainakin tuntuu. Olen lähes koko ikäni ajanut kaikki arkimatkani talvisinkin polkupyörällä ja minusta tuntuu, että pyöräily Oulun talvessa on ollut tällä vuosikymmenellä vaikeampaa kuin koskaan ennen. Muutama vuosi sitten aloin käyttää ensimmäistä kertaa pyörässäni nastarenkaita, koska lämpimästä säästä johtuvia liukkaita kelejä oli niin paljon.</p>
 <p>Oululaisen talven muutosta ei ole pakko mutuilla. Ilmatieteen laitoksen <a href="https://ilmatieteenlaitos.fi/avoin-data">avoimesta datasta</a> voidaan tehdä katsaus säähän pitkälle menneisyyteen. Olen löytänyt Oulusta säädataa vuodesta 1955 alkaen, mutta ainakin Helsingissä päästään pitkälle 1800-luvun puolelle. Datan nouto rajapinnalta onnistuu lähes leikiten, kun hyödyntää <a href="https://github.com/mikmart/">Mikko Marttilan</a> R-pakettia <a href="https://github.com/mikmart/fmir">fmir</a>.</p>
 <p>Katsotaan ensin tulokset ja vasta sitten ohjelmakoodia niiden takana.</p>
 <p>Esitän seuraavassa kuvassa kuukauden keskilämpötilan kuukausittain alkaen vuodesta 1955 elokuuhun 2018 saakka. Olen sovittanut jokaisen kuukauden datalle erikseen lineaarisen regressiomallin. Kuvassa pisteet esittävät kuukausien keskilämpötiloja ja sininen viiva on kuukaudelle sovitetun lineaarisen regression regressiosuora. Esitän punaisella tekstillä kunkin kuukauden keskilämpötilan muutoksen, joka on kuukaudelle sovitetun mallin ennusteen loppupään ja alkupään erotus.</p>
-<p><img src="/img/kuva_2018_09.png" /> Kuvasta nähdään, että talvikuukausien lämpötila on noussut selvästi enemmän kuin kesän. Trendin <a href="https://ilmatieteenlaitos.fi/ajankohtaista/395233246">ennustetaan jatkuvan</a>. Mallien mukaan kaikkein eniten on lämmennyt joulukuu, joka on ollutkin tällä vuosituhannella todella lämmin.</p>
+<p><img src="/img/kuva_2018_09.png" />
+Kuvasta nähdään, että talvikuukausien lämpötila on noussut selvästi enemmän kuin kesän. Trendin <a href="https://ilmatieteenlaitos.fi/ajankohtaista/395233246">ennustetaan jatkuvan</a>. Mallien mukaan kaikkein eniten on lämmennyt joulukuu, joka on ollutkin tällä vuosituhannella todella lämmin.</p>
 <p>Kuvasta huomataan myös, että keskilämpötila vaihtelee talvisin huomattavasti enemmän kuin kesällä. Joulu–helmikuussa keskilämpötilan vaihteluväli on noin 15 astetta, kun kesäisin keskilämpötila vaihtelee alle kymmenen asteen sisällä. Talven sää paitsi lämpenee, on paljon sattuman varassa.</p>
 <p>Analyysiäni ei voi pitää tieteellisenä vaan pikemminkin kuvailevana. Selvää lämpenemistä on kuitenkin tapahtunut. Lämpimien kuukausia on esiintynyt viime vuosina tiuhaan, paljon tiuhemmin kuin menneinä vuosikymmeninä.</p>
 <div id="koodi" class="section level2">
@@ -134,7 +138,7 @@ library(magrittr)
 fmi_set_key(&quot;avaimesi-tähän&quot;)
 
 dates &lt;- tibble(alku = make_date(seq(1950, 2015, 5)), loppu = alku + years(5) - days(1))</code></pre>
-<p>Seuraavaksi luomme listan query-osotteita, jotka kukin palauttavat rajapinnalta yhden siivun dataa. Ensin kirjoitetaan funktio, jossa täytämme valmiiksi <code>fmir</code>-paketin <code>fmi_query</code>-funktion vakiona pysyvät argumentit. Tässä tapauksessa tosin vain tietotyyppi, joka on tässä <code>&quot;monthly&quot;</code>, pysyy vakiona.</p>
+<p>Seuraavaksi luomme listan query-osotteita, jotka kukin palauttavat rajapinnalta yhden siivun dataa. Ensin kirjoitetaan funktio, jossa täytämme valmiiksi <code>fmir</code>-paketin <code>fmi_query</code>-funktion vakiona pysyvät argumentit. Tässä tapauksessa tosin vain tietotyyppi, joka on tässä <code>"monthly"</code>, pysyy vakiona.</p>
 <p>Jotta voidaan varmistaa ehjä data, poimitaan aineistoa kahdelta eri sääasemalta.</p>
 <p>Päivämäärät on muutettava <code>character</code>-tyyppisiksi, koska <code>pmap</code> kärsii R:n <a href="https://github.com/tidyverse/purrr/issues/358#issuecomment-363091446">bugista</a>, jonka vuoksi <code>date</code>-tyypin vektoria ei voi käyttää, mutta luotaviin queryosoitteisiin muunnoksella ei ole vaikutusta.</p>
 <p><code>pmap</code>:lle ei tarvitse antaa sarakkeiden nimiä ollenkaan, jos sarakkeiden nimet vastaavat funktion argumenttien nimiä. Tässä ne ovat tahallaan samat.</p>
@@ -278,7 +282,7 @@ ggsave(&quot;fig/kuva_2018_09.png&quot;, h = 8, w = 6)</code></pre>
                 </div>
 
                 <p class="footer-copyright">
-                    <span>&copy; 2018 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                    <span>&copy; 2019 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
                 </p>
                 <p class="footer-copyright">
                     <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
