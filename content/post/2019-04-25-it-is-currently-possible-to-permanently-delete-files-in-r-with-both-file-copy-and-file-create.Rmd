@@ -46,7 +46,7 @@ Obviously, `from` needs to be checked if it's the same as `to` and in the curren
 if (recursive && (to %in% from || 
       normalizePath(dirname(normalizePath(from))) == normalizePath(to)))
 ```
-Here `normalizePath()` is used because it, according to its help file, "Convert[s] file paths to canonical form for the platform, to display them in a user-understandable form and so that _relative and absolute paths can be compared._" `dirname()` outputs different path form so both input and output of `dirname()` needs to put through `normalizePath()`.
+Here `normalizePath()` is used because it, according to its help file, "Convert[s] file paths to canonical form for the platform, to display them in a user-understandable form and so that _relative and absolute paths can be compared._" `dirname()` outputs different path form so both input and output of `dirname()` need to be put through `normalizePath()`.
 
 Another option would be to see if `from %in% list.files(to)` but I think this could be slow if `to` is a large directory.
 
